@@ -1,8 +1,8 @@
 import express from "express";
+import { userController } from "../controllers/user";
+
 export const userRouter = express.Router();
 
-userRouter.get("/users", (req, res, next) => {
-  res.json({
-    message: "Success",
-  });
-});
+userRouter.post("/register", userController.register);
+userRouter.post("/login", userController.login);
+userRouter.get("/logout", userController.logout);
