@@ -5,8 +5,16 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import helmet from "helmet";
 import { apiRouter } from "./api/v1/routers/apiRouter";
+import { connectMongoDB } from "./api/v1/models/connectDB/connectMongo";
 
 dotenv.config();
+
+// CONNECT DATABASE
+connectMongoDB
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => console.log(err));
 
 const port = process.env.PORT || 4001;
 const app = express();
