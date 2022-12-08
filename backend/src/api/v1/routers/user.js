@@ -6,12 +6,8 @@ export const userRouter = express.Router();
 
 userRouter.post(
   "/register",
-  routerHelper.validateBody(schemas.authLoginSchema),
+  routerHelper.validateBody(schemas.authRegisterSchema),
   userController.register
 );
-userRouter.post(
-  "/login",
-  routerHelper.validateBody(schemas.authLoginSchema),
-  userController.login
-);
+userRouter.post("/login", routerHelper.validateBody(schemas.authLoginSchema), userController.login);
 userRouter.get("/logout", userController.logout);
