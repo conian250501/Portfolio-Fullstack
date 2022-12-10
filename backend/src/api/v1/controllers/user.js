@@ -17,10 +17,6 @@ export const userController = {
       // Regist a new user
       const user = await userService.newUser(req.body);
 
-      // CREATE TOKEN
-      const token = jwtToken(user._id);
-      res.setHeader("access_token", token);
-
       if (user) {
         res.status(200).json({ data: user, message: "Registration successful" });
       } else {
@@ -42,6 +38,10 @@ export const userController = {
       const isValidPassword = await passwordHelper.comparePassword(email, password);
 
       if (isValidPassword) {
+        // CREATE TOKEN
+        const token = jwtToken(user._id);
+        res.setHeader("access_token", token);
+
         res.status(200).json({ message: "Login successful" });
       } else {
         res.status(401).json({ message: "Password incorrect" });
@@ -51,4 +51,8 @@ export const userController = {
     }
   },
   logout: async (req, res, next) => {},
+  checkLogin: async (req, res, next) => {
+    console.log(req.user);
+    return res.status(200).json({ isLoggedIn: true });
+  },
 };
