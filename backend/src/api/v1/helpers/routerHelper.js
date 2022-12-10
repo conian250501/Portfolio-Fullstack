@@ -9,7 +9,6 @@ export const schemas = {
   authRegisterSchema: Joi.object({
     email: Joi.string().email().required(),
     userName: Joi.string().min(4).required(),
-    phone: Joi.string().min(10).required(),
     password: Joi.string()
       .min(8)
       .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)
