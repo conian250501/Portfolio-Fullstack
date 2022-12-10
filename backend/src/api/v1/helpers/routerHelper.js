@@ -38,7 +38,7 @@ export const routerHelper = {
     return (req, res, next) => {
       const result = schema.validate(req.body);
       if (result.error) {
-        res.status(400).json(result.error);
+        res.status(400).json({ message: result.error.details[0].message });
       } else {
         next();
       }
