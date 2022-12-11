@@ -27,4 +27,11 @@ export const userService = {
     await newUser.save();
     return newUser;
   },
+  updateUser: async (data, userId) => {
+    const user = await Users.findByIdAndUpdate(userId, data);
+    return user;
+  },
+  deleteUser: async (user) => {
+    if (user) await user.delete();
+  },
 };

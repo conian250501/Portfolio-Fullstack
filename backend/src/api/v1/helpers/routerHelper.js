@@ -19,6 +19,19 @@ export const schemas = {
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
+  updateUserSchema: Joi.object({
+    avatar: Joi.string()
+      .regex(/([/|.|\w|\s|-])*\.(?:jpg|gif|png)/)
+      .min(4)
+      .required(),
+    userName: Joi.string(),
+    nickName: Joi.string(),
+    phone: Joi.string().required(),
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    introduce: Joi.string().required(),
+    isAdmin: Joi.boolean().required(),
+  }),
 };
 
 export const routerHelper = {

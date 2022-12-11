@@ -5,7 +5,10 @@ export const authMiddleware = {
       if (req.header("authorization")) {
         const token = req.header("authorization").slice(7);
         const user = jwt.verify(token, `${process.env.JWT_SECRET_KEY}`);
-        next(user);
+        if (user) {
+          req.user = user;
+          next();
+        }
       } else {
         return res.status(401).json({ message: "Please login first" });
       }
