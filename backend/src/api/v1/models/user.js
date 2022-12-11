@@ -7,16 +7,21 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    avatar: { type: String, default: "" },
     userName: {
       type: String,
       required: true,
     },
-    nickName: { type: String },
-    phone: { type: String, required: true },
+    nickName: { type: String, default: "" },
+    phone: { type: String, default: "" },
+    title: { type: String, default: "" },
+    description: { type: String, default: "" },
+    introduce: { type: String, default: "" },
     password: {
       type: String,
       required: true,
     },
+    isAdmin: { type: Boolean, default: false },
     // projects: [
     //   {
     //     type: Schema.Types.ObjectId,
@@ -38,6 +43,6 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
-const Users = mongoose.model("users", userSchema);
+const Users = mongoose.model("User", userSchema);
 
 export default Users;
