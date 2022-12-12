@@ -13,7 +13,7 @@ authRouter.post(
   authController.register
 );
 authRouter.post("/login", routerHelper.validateBody(schemas.authLoginSchema), authController.login);
-authRouter.get("/logout", authController.logout);
+authRouter.get("/logout", authMiddleware.verifyToken, authController.logout);
 authRouter.get(
   "/logged_in",
   // passport.authenticate("jwt", { session: false }),
