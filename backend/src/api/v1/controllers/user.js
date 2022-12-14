@@ -30,7 +30,7 @@ export const userController = {
       const { user } = req;
       const { userId } = req.params;
       const currentUser = await userService.findById(user.userId);
-      if (currentUser.isAdmin) {
+      if (currentUser?.isAdmin) {
         const userToDelete = await userService.findById(userId);
         if (userToDelete) {
           await userService.deleteUser(userToDelete);

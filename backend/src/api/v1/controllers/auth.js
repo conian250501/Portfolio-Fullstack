@@ -50,7 +50,19 @@ export const authController = {
       next(error);
     }
   },
-  logout: async (req, res, next) => {},
+  logout: async (req, res, next) => {
+    try {
+      const { user } = req;
+      const currentUser = await userService.findById(user.userId);
+      if (currentUser) {
+        return res.status(200).json({ message: "Logout successfully" });
+      } else {
+        res.status(401).send({ message: "User not logged in" });
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
   checkLogin: async (req, res, next) => {
     console.log(req.user);
     return res.status(200).json({ isLoggedIn: true });
