@@ -20,10 +20,7 @@ export const schemas = {
     password: Joi.string().required(),
   }),
   updateUserSchema: Joi.object({
-    avatar: Joi.string()
-      .regex(/([/|.|\w|\s|-])*\.(?:jpg|gif|png)/)
-      .min(4)
-      .required(),
+    avatar: Joi.string().required(),
     userName: Joi.string(),
     nickName: Joi.string(),
     phone: Joi.string().required(),
@@ -31,6 +28,30 @@ export const schemas = {
     description: Joi.string().required(),
     introduce: Joi.string().required(),
     isAdmin: Joi.boolean().required(),
+  }),
+  createProjectSchema: Joi.object({
+    image: Joi.string().required(),
+    name: Joi.string().required(),
+    description: Joi.string().required(),
+    type: Joi.string().required(),
+    links: Joi.array(),
+    technologicals: Joi.array(),
+  }),
+  updateProjectSchema: Joi.object({
+    image: Joi.string(),
+    name: Joi.string(),
+    description: Joi.string(),
+    type: Joi.string().required(),
+    links: Joi.array(),
+    technologicals: Joi.array(),
+  }),
+  createLinkSchema: Joi.object({
+    lable: Joi.string().required(),
+    url: Joi.string().required(),
+  }),
+  updateLinkSchema: Joi.object({
+    lable: Joi.string(),
+    url: Joi.string(),
   }),
 };
 
