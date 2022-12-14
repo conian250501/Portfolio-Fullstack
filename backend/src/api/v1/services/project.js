@@ -1,6 +1,7 @@
 import Link from "../models/link";
 import Project from "../models/project";
 import TypeProject from "../models/typesProject";
+import Users from "../models/user";
 
 export const projectService = {
   getAll: async () => {
@@ -79,8 +80,17 @@ export const projectService = {
     }
   },
   deleteProject: async (projectId) => {
-    const project = await Project.findByIdAndRemove(projectId);
+    const user = await Users.findOne({ project: projectId }).populate(
+      "projects"
+    );
+    const projectUpdated = await Project.findByIdAndRemove(projectId);
 
-    if (project) return project;
+    const projects = user.projects.filter(
+      (project) => project._id.toString() !== projectId.toString()
+    );
+    user.projects = projects;
+
+    await user.save();
+    if (projectUpdated) return projectUpdated;
   },
 };

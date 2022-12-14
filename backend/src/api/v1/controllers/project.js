@@ -2,6 +2,7 @@ import { projectService } from "../services/project";
 import { userService } from "../services/user";
 import { typeProjectService } from "../services/typeProject.js";
 import TypeProject from "../models/typesProject";
+import Users from "../models/user";
 
 export const projectController = {
   getAll: async (req, res, next) => {
@@ -96,6 +97,7 @@ export const projectController = {
   deleteProject: async (req, res, next) => {
     try {
       const { projectId } = req.params;
+
       const result = await projectService.deleteProject(projectId);
       if (result) {
         res.status(200).json({ message: "Project deleted successfully" });
