@@ -22,24 +22,24 @@ const userSchema = new Schema(
       required: true,
     },
     isAdmin: { type: Boolean, default: false },
-    // projects: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Project",
-    //   },
-    // ],
-    // Skills: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Skill",
-    //   },
-    // ],
-    // contacts: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Contact",
-    //   },
-    // ],
+    projects: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Project",
+      },
+    ],
+    Skills: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Skill",
+      },
+    ],
+    contacts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Contact",
+      },
+    ],
   },
   { timestamps: true }
 );
