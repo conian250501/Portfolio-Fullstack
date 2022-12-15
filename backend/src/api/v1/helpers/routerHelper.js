@@ -6,7 +6,7 @@ export const schemas = {
       .regex(/^[0-9a-fA-F]{24}$/)
       .required(),
   }),
-  authRegisterSchema: Joi.object({
+  authRegister: Joi.object({
     email: Joi.string().email().required(),
     userName: Joi.string().min(4).required(),
     password: Joi.string()
@@ -15,11 +15,11 @@ export const schemas = {
       .required(),
     confirmPassword: Joi.ref("password"),
   }),
-  authLoginSchema: Joi.object({
+  authLogin: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
-  updateUserSchema: Joi.object({
+  updateUser: Joi.object({
     avatar: Joi.string().required(),
     userName: Joi.string(),
     nickName: Joi.string(),
@@ -29,7 +29,7 @@ export const schemas = {
     introduce: Joi.string().required(),
     isAdmin: Joi.boolean().required(),
   }),
-  createProjectSchema: Joi.object({
+  createProject: Joi.object({
     image: Joi.string().required(),
     name: Joi.string().required(),
     description: Joi.string().required(),
@@ -37,7 +37,7 @@ export const schemas = {
     links: Joi.array(),
     technologicals: Joi.array(),
   }),
-  updateProjectSchema: Joi.object({
+  updateProject: Joi.object({
     image: Joi.string(),
     name: Joi.string(),
     description: Joi.string(),
@@ -45,13 +45,23 @@ export const schemas = {
     links: Joi.array(),
     technologicals: Joi.array(),
   }),
-  createLinkSchema: Joi.object({
+  createLink: Joi.object({
     lable: Joi.string().required(),
     url: Joi.string().required(),
   }),
-  updateLinkSchema: Joi.object({
+  updateLink: Joi.object({
     lable: Joi.string(),
     url: Joi.string(),
+  }),
+  createSkill: Joi.object({
+    image: Joi.string().required(),
+    name: Joi.string().required(),
+    description: Joi.string().required(),
+  }),
+  updateSkill: Joi.object({
+    image: Joi.string(),
+    name: Joi.string(),
+    description: Joi.string(),
   }),
 };
 

@@ -8,7 +8,7 @@ userRouter.get("/", authMiddleware.verifyToken, userController.getProfile);
 userRouter.patch(
   "/update",
   authMiddleware.verifyToken,
-  routerHelper.validateBody(schemas.updateUserSchema),
+  routerHelper.validateBody(schemas.updateUser),
   userController.updateUser
 );
 userRouter.delete(

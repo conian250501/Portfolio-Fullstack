@@ -9,14 +9,14 @@ linkRouter.post(
   "/create",
   authMiddleware.verifyToken,
   roleMiddleware.verifyRole,
-  routerHelper.validateBody(schemas.createLinkSchema),
+  routerHelper.validateBody(schemas.createLink),
   linkController.createLink
 );
 linkRouter.patch(
   "/update/:linkId",
   authMiddleware.verifyToken,
   roleMiddleware.verifyRole,
-  routerHelper.validateBody(schemas.updateLinkSchema),
+  routerHelper.validateBody(schemas.updateLink),
   linkController.updateLink
 );
 linkRouter.delete("/delete/:linkId", linkController.deleteLink);
