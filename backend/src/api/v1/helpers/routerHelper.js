@@ -63,6 +63,14 @@ export const schemas = {
     name: Joi.string(),
     description: Joi.string(),
   }),
+  createContact: Joi.object({
+    name: Joi.string().required(),
+    url: Joi.string().required(),
+  }),
+  updateContact: Joi.object({
+    name: Joi.string(),
+    url: Joi.string(),
+  }),
 };
 
 export const routerHelper = {
