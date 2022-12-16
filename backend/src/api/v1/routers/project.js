@@ -16,14 +16,14 @@ projectRouter.post(
   "/create",
   authMiddleware.verifyToken,
   roleMiddleware.verifyRole,
-  routerHelper.validateBody(schemas.createProjectSchema),
+  routerHelper.validateBody(schemas.createProject),
   projectController.createProject
 );
 projectRouter.patch(
   "/update/:projectId",
   authMiddleware.verifyToken,
   roleMiddleware.verifyRole,
-  routerHelper.validateBody(schemas.updateProjectSchema),
+  routerHelper.validateBody(schemas.updateProject),
   projectController.updateProject
 );
 projectRouter.delete(

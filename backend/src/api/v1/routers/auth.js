@@ -9,10 +9,14 @@ export const authRouter = express.Router();
 // AUTH
 authRouter.post(
   "/register",
-  routerHelper.validateBody(schemas.authRegisterSchema),
+  routerHelper.validateBody(schemas.authRegister),
   authController.register
 );
-authRouter.post("/login", routerHelper.validateBody(schemas.authLoginSchema), authController.login);
+authRouter.post(
+  "/login",
+  routerHelper.validateBody(schemas.authLogin),
+  authController.login
+);
 authRouter.get("/logout", authMiddleware.verifyToken, authController.logout);
 authRouter.get(
   "/logged_in",

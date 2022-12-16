@@ -16,9 +16,14 @@ export const authController = {
 
       // Regist a new user
       const user = await userService.newUser(req.body);
+      // CREATE TOKEN
+      const token = jwtToken(user._id);
+      res.setHeader("access_token", token);
 
       if (user) {
-        res.status(200).json({ data: user, message: "Registration successful" });
+        res
+          .status(200)
+          .json({ data: user, message: "Registration successful" });
       } else {
         res.status(401).json({ message: "Registration failed" });
       }
@@ -35,7 +40,10 @@ export const authController = {
       if (!user) return res.status(401).json({ message: "User dont exists" });
 
       // CHECK PASSWORD
-      const isValidPassword = await passwordHelper.comparePassword(email, password);
+      const isValidPassword = await passwordHelper.comparePassword(
+        email,
+        password
+      );
 
       if (isValidPassword) {
         // CREATE TOKEN
