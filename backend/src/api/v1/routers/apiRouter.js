@@ -1,5 +1,6 @@
 import express from "express";
 import { authRouter } from "./auth";
+import { contactRouter } from "./contact";
 import { linkRouter } from "./linkRouter";
 import { projectRouter } from "./project";
 import { skillRouter } from "./skill";
@@ -7,6 +8,7 @@ import { typeProjectRouter } from "./typeProject";
 import { userRouter } from "./user";
 export const apiRouter = express.Router();
 
+apiRouter.use("/contact", contactRouter);
 apiRouter.use("/skill", skillRouter);
 apiRouter.use("/link", linkRouter);
 apiRouter.use("/types_project", typeProjectRouter);
