@@ -15,6 +15,7 @@ authRouter.post(
 authRouter.post(
   "/login",
   routerHelper.validateBody(schemas.authLogin),
+  authMiddleware.verifyEmail,
   authController.login
 );
 authRouter.get("/logout", authMiddleware.verifyToken, authController.logout);
@@ -24,3 +25,5 @@ authRouter.get(
   authMiddleware.verifyToken,
   authController.checkLogin
 );
+
+authRouter.get("/verify-email/:token", authController.verifyEmail);

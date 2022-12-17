@@ -9,15 +9,15 @@ import { connectMongoDB } from "./api/v1/models/connectDB/connectMongo";
 
 dotenv.config();
 
+const port = process.env.PORT || 4001;
+const app = express();
+
 // CONNECT DATABASE
 connectMongoDB
   .then(() => {
     console.log("Connected to MongoDB");
   })
   .catch((err) => console.log(err));
-
-const port = process.env.PORT || 4001;
-const app = express();
 
 app.use(cors());
 app.use(morgan("dev"));
