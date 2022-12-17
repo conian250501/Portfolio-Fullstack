@@ -5,7 +5,10 @@ export const userController = {
     try {
       const { user } = req;
       const currentUser = await userService.findById(user.userId);
-      if (currentUser) return res.status(200).json({ data: currentUser, message: "Successfully" });
+      if (currentUser)
+        return res
+          .status(200)
+          .json({ data: currentUser, message: "Successfully" });
       res.status(200).json({ message: "User not found" });
     } catch (error) {
       next(error);
@@ -15,7 +18,10 @@ export const userController = {
     try {
       const { user } = req;
       const currentUser = await userService.findById(user.userId);
-      const userUpdated = await userService.updateUser(req.body, currentUser._id);
+      const userUpdated = await userService.updateUser(
+        req.body,
+        currentUser?._id
+      );
       if (userUpdated) {
         res.status(200).json({ message: "User updated" });
       } else {
@@ -39,7 +45,9 @@ export const userController = {
           res.status(404).json({ message: "User not found" });
         }
       } else {
-        res.status(200).json({ message: "You dont have permission to delete this user" });
+        res
+          .status(200)
+          .json({ message: "You dont have permission to delete this user" });
       }
     } catch (error) {
       next(error);

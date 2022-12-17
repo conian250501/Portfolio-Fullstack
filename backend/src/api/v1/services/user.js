@@ -3,6 +3,10 @@ import bcrypt from "bcrypt";
 import { passwordHelper } from "../helpers/passwordHelper";
 
 export const userService = {
+  findByToken: async (token) => {
+    const user = await Users.findOne({ token: token });
+    if (user) return user;
+  },
   findById: async (userId) => {
     const user = await Users.findOne({ _id: userId });
     if (user) return user;

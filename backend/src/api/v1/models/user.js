@@ -22,6 +22,10 @@ const userSchema = new Schema(
       required: true,
     },
     isAdmin: { type: Boolean, default: false },
+    token: {
+      type: String | null,
+    },
+    verify: { type: Boolean, default: false },
     projects: [
       {
         type: Schema.Types.ObjectId,
