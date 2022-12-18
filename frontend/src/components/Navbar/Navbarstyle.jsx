@@ -36,7 +36,7 @@ export const NavContainer = styled.div`
 export const NavLogo = styled.div`
   /* font-family: 'Syne', sans-serif; */
 `;
-export const NavLogoLink = styled.a`
+export const NavLogoLink = styled.div`
   color: ${textColor};
   font-size: 4rem;
   font-weight: 700;
