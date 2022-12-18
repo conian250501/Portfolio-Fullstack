@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BsArrowRight,
   BsChevronDoubleDown,
@@ -25,8 +25,16 @@ import {
 } from "./AboutStyles";
 
 import { data } from "../../data/AboutData";
+import { useDispatch } from "react-redux";
+import { getProfileAsync } from "../../features/profile/profileSlice";
 
 const About = ({ id }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // dispatch(getProfileAsync());
+  }, []);
+
   const handleScroll = () => {
     window.scrollTo(0, 750);
   };
@@ -35,6 +43,7 @@ const About = ({ id }) => {
     loop: 2,
     delaySpeed: 5000,
   });
+
   return (
     <Section width={"1440px"} maxWidth={"100%"} margin={"0 auto"}>
       <AboutContainer id={id}>
