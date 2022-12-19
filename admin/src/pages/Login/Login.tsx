@@ -1,24 +1,26 @@
-import { Button, TextField, Typography } from "@mui/material";
-import { Theme } from "@mui/material/styles";
-import { makeStyles } from "@mui/styles";
+import { Button, IconButton, InputAdornment, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { SyntheticEvent, useState } from "react";
 import { Link } from "react-router-dom";
-import { useStyles } from "./loginStyles";
+import { InputForm, useStyles } from "./loginStyles";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-type Props = {};
-
-const Login = (props: Props) => {
+const Login: React.FC = () => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isShowPassword, setIsShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setIsShowPassword(!isShowPassword);
+  const handleMouseDownPassword = () => setIsShowPassword(!isShowPassword);
 
   const handleLogin = (e: SyntheticEvent) => {
     e.preventDefault();
     console.log({ email, password });
   };
   return (
-    <div className={classes.container}>
+    <Box component="div" className={classes.container}>
       <Typography
         variant="h2"
         noWrap
@@ -37,34 +39,53 @@ const Login = (props: Props) => {
         Portfolio App
       </Typography>
       <Box component="form" onSubmit={handleLogin}>
-        <TextField
+        <InputForm
+          value={email}
           id="email"
           label="email"
           variant="outlined"
           size="medium"
-          fullWidth
           onChange={(e) => setEmail(e.target.value)}
         />
-        <TextField
+        <InputForm
+          value={password}
           id="password"
           label="password"
           variant="outlined"
           size="medium"
-          fullWidth
           margin="normal"
           onChange={(e) => setPassword(e.target.value)}
+          type={isShowPassword ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {isShowPassword ? <Visibility /> : <VisibilityOffIcon />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
 
         <Button
           type="submit"
-          color="primary"
+          color="secondary"
           fullWidth
           variant="contained"
           size="large"
           sx={{
-            float: "right",
             marginTop: "8px",
-            marginBottom: "12px",
+            fontWeight: 600,
+            padding: "10px",
+            ":hover": {
+              boxShadow: "6px 6px 0px rgba(0,0,0,1)",
+            },
+            borderRadius: 0,
+            background: "#e0f954 !important",
           }}
         >
           Login
@@ -77,14 +98,12 @@ const Login = (props: Props) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            flexDirection: {
-              mobile: "column",
-              tablet: "row",
-              laptop: "row",
-            },
+            paddingTop: "18px",
+            flexDirection: "column",
+            gap: "8px",
           }}
         >
-          <Link to="/forgotpassword">
+          <Link to="/forgot-password">
             <Typography
               variant="h2"
               fontSize={14}
@@ -94,6 +113,8 @@ const Login = (props: Props) => {
                 textDecoration: "underline",
                 marginBottom: {
                   mobile: "8px",
+                  tablet: "0",
+                  laptop: "0",
                 },
               }}
             >
@@ -116,7 +137,7 @@ const Login = (props: Props) => {
           </Link>
         </Box>
       </Box>
-    </div>
+    </Box>
   );
 };
 

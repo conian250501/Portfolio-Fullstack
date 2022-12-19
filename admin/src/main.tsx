@@ -6,7 +6,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "./global/styles/globalStyles.scss";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
-import { theme } from "./global/styles/customBreakpoints";
+import { theme } from "./global/styles/customThemes";
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Router>
