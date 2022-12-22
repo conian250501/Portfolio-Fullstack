@@ -23,7 +23,7 @@ const userSchema = new Schema(
     },
     isAdmin: { type: Boolean, default: false },
     token: {
-      type: String | null,
+      type: String,
     },
     verify: { type: Boolean, default: false },
     projects: [

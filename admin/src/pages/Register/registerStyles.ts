@@ -1,4 +1,4 @@
-import { createStyles, Theme } from "@mui/material";
+import { createStyles, styled, Theme, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { CSSProperties } from "react";
 
@@ -23,4 +23,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
       padding: "0 4%",
     },
   },
+}));
+
+export const TextError = styled(Typography)(({ theme }) => ({
+  color: "red",
+  fontSize: 14,
 }));
