@@ -10,7 +10,11 @@ export interface LogoProps extends ThemeProps {
   fontSize: string;
   fontWeight: string;
 }
-export interface ContainerProps extends ThemeProps {}
+export interface ContainerProps extends ThemeProps {
+  openMobile: boolean;
+}
+export interface OpenIconProps extends ThemeProps {}
+export interface BackgroundModalProps extends ThemeProps {}
 export interface UserAvatarProps extends ThemeProps {}
 export interface UserProfileProps extends ThemeProps {}
 export interface UserInfoProps extends ThemeProps {}
@@ -19,10 +23,9 @@ export interface MenuListProps extends ThemeProps {}
 export interface ButtonLogoutProps extends ThemeProps {}
 
 export const Container = styled("div")<ContainerProps>(
-  ({ theme, maxsize }) => ({
+  ({ theme, maxsize, openMobile }) => ({
     position: "relative",
     width: maxsize === "true" ? "340px" : "80px",
-
     height: "100vh",
     padding: maxsize === "true" ? 20 : 8,
     display: "flex",
@@ -32,10 +35,51 @@ export const Container = styled("div")<ContainerProps>(
     borderRight: "1px solid #ccc",
     backgroundColor: theme.palette.backgroundColor.main,
     transition: "all 0.25s linear",
+    [theme.breakpoints.only("tablet")]: {
+      position: openMobile ? "fixed" : "relative",
+      top: 0,
+      left: 0,
+      zIndex: 20000,
+
+      display: openMobile ? "flex" : "none",
+      transform: openMobile ? "translateX(0)" : "translateX(-400px)",
+    },
+    [theme.breakpoints.only("mobile")]: {
+      position: openMobile ? "fixed" : "relative",
+      top: 0,
+      left: openMobile ? 0 : "-400px",
+      zIndex: 20000,
+      width: "80%",
+      display: openMobile ? "flex" : "none",
+      transform: openMobile ? "translateX(0)" : "translateX(-300px)",
+    },
   })
 );
 
-export const OpenIcon = styled("div")(({ theme }) => ({
+export const BackgroundModal = styled("div")<BackgroundModalProps>(
+  ({ theme }) => ({
+    position: "absolute",
+    zIndex: 1000,
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "rgba(0,0,0,0.4)",
+    cursor: "pointer",
+    [theme.breakpoints.only("desktop")]: {
+      display: "none",
+    },
+    [theme.breakpoints.only("laptop")]: {
+      display: "none",
+    },
+    [theme.breakpoints.only("tablet")]: {
+      display: "block",
+    },
+    [theme.breakpoints.only("mobile")]: {
+      display: "block",
+    },
+  })
+);
+
+export const OpenIcon = styled("div")<OpenIconProps>(({ theme }) => ({
   position: "absolute",
   right: -12,
   width: 24,
@@ -51,6 +95,12 @@ export const OpenIcon = styled("div")(({ theme }) => ({
   },
   cursor: "pointer",
   zIndex: 1,
+  [theme.breakpoints.only("tablet")]: {
+    display: "none",
+  },
+  [theme.breakpoints.only("mobile")]: {
+    display: "none",
+  },
 }));
 
 export const Logo = styled("div")<LogoProps>(

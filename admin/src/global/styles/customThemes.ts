@@ -44,7 +44,7 @@ declare module "@mui/material/styles" {
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "#3a2bba",
+      main: "rgb(58, 43, 186)",
       contrastText: "rgba(58, 43, 186, 0.1)",
     },
     secondary: {
@@ -54,7 +54,7 @@ export const theme = createTheme({
       main: "rgb(99, 115, 129)",
     },
     backgroundColor: {
-      main: "#e5e5e5",
+      main: "rgb(229, 229, 229)",
     },
   },
   mixins: {

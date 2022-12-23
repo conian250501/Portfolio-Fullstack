@@ -1,18 +1,13 @@
-import React, { useState } from "react";
-import { Container, Input, ResultContainer } from "./inputSearchStyles";
-import SearchIcon from "@mui/icons-material/Search";
-import { InputAdornment, Typography } from "@mui/material";
 import CachedIcon from "@mui/icons-material/Cached";
-type Props = {
-  open: boolean;
-};
+import SearchIcon from "@mui/icons-material/Search";
+import { InputAdornment, TextField } from "@mui/material";
+import React, { useState } from "react";
+import { Container } from "./inputSearchStyles";
 
-const InputSearch: React.FC<Props> = ({ open }) => {
-  const [openResult, setOpenResult] = useState(false);
-
+const InputSearch: React.FC = () => {
   return (
-    <Container open={open} onClick={(e) => e.stopPropagation()}>
-      <Input
+    <Container onClick={(e) => e.stopPropagation()}>
+      <TextField
         fullWidth
         InputProps={{
           startAdornment: (
@@ -27,15 +22,7 @@ const InputSearch: React.FC<Props> = ({ open }) => {
           ),
         }}
         placeholder="Search..."
-        onFocus={() => setOpenResult(true)}
-        onBlur={() => setOpenResult(false)}
       />
-
-      {openResult && (
-        <ResultContainer>
-          <Typography>Search result</Typography>
-        </ResultContainer>
-      )}
     </Container>
   );
 };

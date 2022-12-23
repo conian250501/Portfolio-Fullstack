@@ -3,7 +3,7 @@ import { Container } from "../../global/styles/globalStyles";
 
 type Props = {};
 
-const Dashboard = (props: Props) => {
+const Profile = (props: Props) => {
   return (
     <Container>
       <Header />
@@ -11,4 +11,4 @@ const Dashboard = (props: Props) => {
   );
 };
 
-export default Dashboard;
+export default Profile;

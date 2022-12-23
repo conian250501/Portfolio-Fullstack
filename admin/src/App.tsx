@@ -13,6 +13,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Projects from "./pages/Projects";
 import Skills from "./pages/Skills";
 import Contacts from "./pages/Contacts";
+import Profile from "./pages/Profile";
 
 function App() {
   const isAuthenticated = useAppSelector(getIsAuthenticated);
@@ -62,7 +63,18 @@ function App() {
               )
             }
           />
-
+          <Route
+            path="/profile"
+            element={
+              isAuthenticated ? (
+                <MainLayout>
+                  <Profile />
+                </MainLayout>
+              ) : (
+                <NotFound />
+              )
+            }
+          />
           <Route
             path="/projects"
             element={

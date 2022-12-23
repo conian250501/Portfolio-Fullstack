@@ -1,16 +1,7 @@
 import { styled, TextField } from "@mui/material";
 
-interface ContainerProps {
-  open: boolean;
-}
-export const Container = styled("div")<ContainerProps>(({ theme, open }) => ({
+export const Container = styled("div")(({ theme }) => ({
   width: "60%",
-  position: "absolute",
-  top: "8px",
-  left: "5%",
-  transform: open ? "translateY(0)" : "translateY(-100px)",
-  height: open ? "auto" : 0,
-  transition: theme.mixins.toolbar.transition,
 }));
 export const Input = styled(TextField)(({ theme }) => ({
   backgroundColor: "#fff",

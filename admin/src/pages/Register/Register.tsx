@@ -15,34 +15,27 @@ import { Link } from "react-router-dom";
 import { RegisterTypes } from "../../common/types";
 import { useAppDispatch } from "../../app/hooks";
 import { registerAsync } from "../../featureds/Auth/authActions";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { FieldValues, useForm } from "react-hook-form";
 
-const Register: React.FC = () => {
+const Register = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
-
-  const handleRegister = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-
-    const data: RegisterTypes = {
-      email,
-      userName,
-      password,
-      confirmPassword,
-    };
-    dispatch(registerAsync(data));
+  const handleRegister = (value: FieldValues | RegisterTypes) => {
+    dispatch(registerAsync(value as RegisterTypes));
   };
-
   return (
     <>
       <Box component="div" className={classes.container}>
@@ -64,7 +57,11 @@ const Register: React.FC = () => {
           Portfolio App
         </Typography>
 
-        <Box component="form" width={"100%"} onSubmit={handleRegister}>
+        <Box
+          component="form"
+          width={"100%"}
+          onSubmit={handleSubmit(handleRegister)}
+        >
           <TextField
             type="email"
             label="Email"
@@ -72,9 +69,13 @@ const Register: React.FC = () => {
             size="medium"
             helperText="Please enter your email"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            // value={email}
+            {...register("email", {
+              pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+            })}
+            // onChange={(e) => setEmail(e.target.value)}
           />
+          {errors.email && <TextError>*Email invalid</TextError>}
           <TextField
             type="text"
             label="Name"
@@ -85,13 +86,18 @@ const Register: React.FC = () => {
             sx={{
               marginTop: 2,
             }}
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            {...register("userName", { maxLength: 25 })}
           />
+
+          {errors.userName && (
+            <TextError>*Name must be less than 25 characters</TextError>
+          )}
+
           <TextField
             type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register("password", {
+              pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+            })}
             label="Password"
             fullWidth
             size="medium"
@@ -114,10 +120,25 @@ const Register: React.FC = () => {
               marginTop: 2,
             }}
           />
+
+          {errors.password && (
+            <>
+              <TextError>*Password must be less 8 character</TextError>
+              <TextError>*Password must include 1 number</TextError>
+              <TextError>
+                *Password must include 1 uppercase character
+              </TextError>
+            </>
+          )}
           <TextField
             type={showConfirmPassword ? "text" : "password"}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            {...register("confirmPassword", {
+              validate: (val: string) => {
+                if (watch("password") != val) {
+                  return "Your passwords do no match";
+                }
+              },
+            })}
             label="Confirm password"
             fullWidth
             size="medium"
@@ -128,9 +149,15 @@ const Register: React.FC = () => {
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    onMouseDown={() => setShowConfirmPassword(!showConfirmPassword)}
+                    onMouseDown={() =>
+                      setShowConfirmPassword(!showConfirmPassword)
+                    }
                   >
-                    {showConfirmPassword ? <Visibility /> : <VisibilityOffIcon />}
+                    {showConfirmPassword ? (
+                      <Visibility />
+                    ) : (
+                      <VisibilityOffIcon />
+                    )}
                   </IconButton>
                 </InputAdornment>
               ),
@@ -140,6 +167,9 @@ const Register: React.FC = () => {
               marginTop: 2,
             }}
           />
+          {errors.confirmPassword && (
+            <TextError>*Password dont match</TextError>
+          )}
 
           <Button
             type="submit"

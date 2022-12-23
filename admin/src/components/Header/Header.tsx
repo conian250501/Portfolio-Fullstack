@@ -1,36 +1,37 @@
+import DragHandleIcon from "@mui/icons-material/DragHandle";
 import LocationSearchingIcon from "@mui/icons-material/LocationSearching";
-import React, { useEffect, useState } from "react";
-import InputSearch from "../InputSearch";
+import React from "react";
+import { useAppDispatch } from "../../app/hooks";
+import { openSidebar } from "../../featureds/Header/sidebarSlice";
 import CountryLanguage from "../Tooltip/CountryLanguage";
 import Notification from "../Tooltip/Notification";
 import SettingUser from "../Tooltip/SettingUser";
-import { Container, IconSearch, SectionRight, SectionRightItem } from "./headerSytles";
+import {
+  Container,
+  IconMenuBar,
+  IconSearch,
+  SectionLeft,
+  SectionRight,
+  SectionRightItem,
+} from "./headerSytles";
 
 const Header: React.FC = () => {
-  const [openSearch, setOpenSearch] = useState(false);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const handleCloseSearch = () => {
-      setOpenSearch(false);
-    };
-    window.addEventListener("click", handleCloseSearch);
-
-    return () => {
-      window.removeEventListener("click", handleCloseSearch);
-    };
-  }, [openSearch]);
+  const handleOpenHeader = () => {
+    dispatch(openSidebar(true));
+  };
   return (
     <>
-      <InputSearch open={openSearch} />
       <Container>
-        <IconSearch
-          onClick={(e) => {
-            e.stopPropagation();
-            setOpenSearch(!openSearch);
-          }}
-        >
-          <LocationSearchingIcon className="search_icon" />
-        </IconSearch>
+        <SectionLeft>
+          <IconMenuBar onClick={handleOpenHeader}>
+            <DragHandleIcon className="menubar_icon" />
+          </IconMenuBar>
+          <IconSearch>
+            <LocationSearchingIcon className="search_icon" />
+          </IconSearch>
+        </SectionLeft>
 
         <SectionRight>
           <SectionRightItem>

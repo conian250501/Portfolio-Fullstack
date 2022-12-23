@@ -16,7 +16,7 @@ export const IconNotify = styled("div")(({ theme }) => ({
 
   ".notify_icon": {
     fontSize: 24,
-    color: theme.palette.primary.main,
+    color: theme.palette.textColor.main,
   },
 }));
 
