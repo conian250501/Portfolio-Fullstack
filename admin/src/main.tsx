@@ -1,21 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import CssBaseline from "@mui/material/CssBaseline";
 
-import "./global/styles/globalStyles.scss";
-import { BrowserRouter as Router } from "react-router-dom";
+// CSS styles
 import { ThemeProvider } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from "./global/styles/customThemes";
+import "./global/styles/globalStyles.scss";
+import "react-toastify/dist/ReactToastify.css";
+
+// Store
+import { Provider } from "react-redux";
+import store from "./app/store";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <Router>
-      <CssBaseline>
-        <ThemeProvider theme={theme}>
+    <CssBaseline>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
           <App />
-        </ThemeProvider>
-      </CssBaseline>
-    </Router>
+        </Provider>
+      </ThemeProvider>
+    </CssBaseline>
   </React.StrictMode>
 );

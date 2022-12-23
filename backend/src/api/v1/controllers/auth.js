@@ -12,7 +12,7 @@ export const authController = {
       if (!user) return res.status(200).json({ message: "Token invalid" });
 
       user.verify = true;
-      user.token = null;
+      // user.token = null;
       await user.save();
 
       res.redirect("http://localhost:3000/");
