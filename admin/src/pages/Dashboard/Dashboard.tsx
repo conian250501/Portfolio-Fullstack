@@ -1,13 +1,12 @@
-import Header from "../../components/Header";
-import { Container } from "../../global/styles/globalStyles";
+import { Box, Grid } from "@mui/material";
 
 type Props = {};
 
 const Dashboard = (props: Props) => {
   return (
-    <Container>
-      <Header />
-    </Container>
+    <Box component={"div"} sx={{ marginTop: "40px" }}>
+      dashboard
+    </Box>
   );
 };
 

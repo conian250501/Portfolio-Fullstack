@@ -1,5 +1,6 @@
 import { createTheme, Palette, ThemeProvider } from "@mui/material";
 import { Fontface } from "@mui/material/styles/createMixins";
+import { CSSProperties } from "@mui/styles";
 
 declare module "@mui/material/styles" {
   interface BreakpointOverrides {
@@ -27,7 +28,17 @@ declare module "@mui/material/styles" {
     main: string;
     darker?: string;
   }
+  interface Palette {
+    textBody: Palette["primary"];
+  }
+  interface PaletteOptions {
+    textBody: PaletteOptions["primary"];
+  }
 
+  interface PaletteColor {
+    main: string;
+    darker?: string;
+  }
   interface Palette {
     textColor: Palette["primary"];
   }
@@ -56,6 +67,9 @@ export const theme = createTheme({
     backgroundColor: {
       main: "rgb(229, 229, 229)",
     },
+    textBody: {
+      main: "rgb(33, 43, 54)",
+    },
   },
   mixins: {
     toolbar: {
@@ -73,6 +87,9 @@ export const theme = createTheme({
       alignItems: "center",
       justifyContent: "center",
       transition: "all 0.25s linear",
+      borderRadius: "6px",
+      boxShadow:
+        "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
     },
   },
   typography: {
