@@ -13,6 +13,7 @@ export interface LogoProps extends ThemeProps {
 export interface ContainerProps extends ThemeProps {
   openMobile: boolean;
 }
+export interface WrapperProps extends ThemeProps {}
 export interface OpenIconProps extends ThemeProps {}
 export interface BackgroundModalProps extends ThemeProps {}
 export interface UserAvatarProps extends ThemeProps {}
@@ -27,7 +28,7 @@ export const Container = styled("div")<ContainerProps>(
     position: "relative",
     width: maxsize === "true" ? "340px" : "80px",
     height: "100vh",
-    padding: maxsize === "true" ? 20 : 8,
+
     display: "flex",
     alignItems: maxsize === "true" ? "start" : "center",
     justifyContent: "flex-start",
@@ -40,7 +41,6 @@ export const Container = styled("div")<ContainerProps>(
       top: 0,
       left: 0,
       zIndex: 20000,
-
       display: openMobile ? "flex" : "none",
       transform: openMobile ? "translateX(0)" : "translateX(-400px)",
     },
@@ -55,6 +55,20 @@ export const Container = styled("div")<ContainerProps>(
     },
   })
 );
+
+export const Wrapper = styled("div")<WrapperProps>(({ theme, maxsize }) => ({
+  width: "100%",
+  height: "100%",
+  overflowY: "auto",
+  overflowX: "hidden",
+  padding: maxsize === "true" ? 20 : 8,
+  paddingBottom: 40,
+  "::-webkit-scrollbar": {
+    display: "none",
+  },
+  MsOverflowStyle: "none",
+  scrollbarWidth: "none",
+}));
 
 export const BackgroundModal = styled("div")<BackgroundModalProps>(
   ({ theme }) => ({
@@ -81,6 +95,7 @@ export const BackgroundModal = styled("div")<BackgroundModalProps>(
 
 export const OpenIcon = styled("div")<OpenIconProps>(({ theme }) => ({
   position: "absolute",
+  top: 20,
   right: -12,
   width: 24,
   height: 24,
