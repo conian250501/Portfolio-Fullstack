@@ -1,15 +1,16 @@
 import { styled } from "@mui/material";
 
 export const Container = styled("header")(({ theme }) => ({
-  position: "absolute",
+  position: "sticky",
   top: 0,
   left: 0,
   right: 0,
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  backgroundColor: `rgba(299,299,299,0.7))`,
+  boxShadow: theme.mixins.toolbar.boxShadow,
   padding: "10px 12px",
+  zIndex: 1000000000,
 }));
 export const IconSearch = styled("div")(({ theme }) => ({
   width: 40,

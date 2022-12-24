@@ -3,6 +3,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+import { SectionLeft, SectionRight } from "./mainLayoutStyles";
 
 type Props = {
   children: React.ReactNode;
@@ -15,8 +16,14 @@ const MainLayout: React.FC<Props> = ({ children }) => {
         display: "flex",
       }}
     >
-      <Sidebar />
-      {children}
+      <SectionLeft>
+        <Sidebar />
+      </SectionLeft>
+
+      <SectionRight>
+        <Header />
+        {children}
+      </SectionRight>
     </Grid>
   );
 };
