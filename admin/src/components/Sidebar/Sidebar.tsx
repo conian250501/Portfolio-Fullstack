@@ -11,6 +11,7 @@ import {
   UserAvatar,
   UserInfo,
   UserProfile,
+  Wrapper,
 } from "./sidebarStyles";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
@@ -32,6 +33,12 @@ const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();
   const isOpenSidebar = useAppSelector(getOpenSidebar);
 
+  useEffect(() => {
+    if (isOpenSidebar) {
+      setMaxsize(true);
+    }
+  }, [maxsize, isOpenSidebar]);
+
   const handleLogout = () => {
     dispatch(logoutAsync());
   };
@@ -46,57 +53,59 @@ const Sidebar: React.FC = () => {
         <OpenIcon onClick={() => setMaxsize(!maxsize)}>
           <ChevronLeftIcon className="open_icon" />
         </OpenIcon>
-        <Logo fontSize="40px" fontWeight="bold" maxsize={`${maxsize}`}>
-          {maxsize ? "Conian" : "C"}
-        </Logo>
 
-        <UserProfile maxsize={`${maxsize}`}>
-          <Link to="/profile">
-            <UserAvatar maxsize={`${maxsize}`}>
-              <img
-                src="/assets/images/avatar-placeholder.jpg"
-                alt=""
-                className="user_avatar"
-              />
-            </UserAvatar>
-          </Link>
+        <Wrapper maxsize={`${maxsize}`}>
+          <Logo fontSize="40px" fontWeight="bold" maxsize={`${maxsize}`}>
+            {maxsize ? "Conian" : "C"}
+          </Logo>
 
-          <UserInfo maxsize={`${maxsize}`}>
-            <h1 className="name">Minh Tai</h1>
-            <p className="role">Admin</p>
-          </UserInfo>
-        </UserProfile>
+          <UserProfile maxsize={`${maxsize}`}>
+            <Link to="/profile">
+              <UserAvatar maxsize={`${maxsize}`}>
+                <img
+                  src="/assets/images/avatar-placeholder.jpg"
+                  alt=""
+                  className="user_avatar"
+                />
+              </UserAvatar>
+            </Link>
 
-        <MenuList>
-          <MenuLabel maxsize={`${maxsize}`}>General</MenuLabel>
-          <MenuItem maxsize={`${maxsize}`}>
-            <NavLink to="/" end>
-              <DashboardIcon className="icon" />
-              <Typography className="content">Dashboard</Typography>
-            </NavLink>
-          </MenuItem>
+            <UserInfo maxsize={`${maxsize}`}>
+              <h1 className="name">Minh Tai</h1>
+              <p className="role">Admin</p>
+            </UserInfo>
+          </UserProfile>
 
-          <MenuLabel maxsize={`${maxsize}`}>Management</MenuLabel>
-          <MenuItem maxsize={`${maxsize}`}>
-            <NavLink to="/projects">
-              <AccountTreeIcon className="icon" />
-              <Typography className="content">Projects</Typography>
-            </NavLink>
-          </MenuItem>
-          <MenuItem maxsize={`${maxsize}`}>
-            <NavLink to="/skills">
-              <DataObjectIcon className="icon" />
-              <Typography className="content">Skils</Typography>
-            </NavLink>
-          </MenuItem>
-          <MenuItem maxsize={`${maxsize}`}>
-            <NavLink to="/contacts">
-              <ContactEmergencyIcon className="icon" />
-              <Typography className="content">Contacts</Typography>
-            </NavLink>
-          </MenuItem>
-        </MenuList>
+          <MenuList>
+            <MenuLabel maxsize={`${maxsize}`}>General</MenuLabel>
+            <MenuItem maxsize={`${maxsize}`}>
+              <NavLink to="/" end>
+                <DashboardIcon className="icon" />
+                <Typography className="content">Dashboard</Typography>
+              </NavLink>
+            </MenuItem>
 
+            <MenuLabel maxsize={`${maxsize}`}>Management</MenuLabel>
+            <MenuItem maxsize={`${maxsize}`}>
+              <NavLink to="/projects">
+                <AccountTreeIcon className="icon" />
+                <Typography className="content">Projects</Typography>
+              </NavLink>
+            </MenuItem>
+            <MenuItem maxsize={`${maxsize}`}>
+              <NavLink to="/skills">
+                <DataObjectIcon className="icon" />
+                <Typography className="content">Skils</Typography>
+              </NavLink>
+            </MenuItem>
+            <MenuItem maxsize={`${maxsize}`}>
+              <NavLink to="/contacts">
+                <ContactEmergencyIcon className="icon" />
+                <Typography className="content">Contacts</Typography>
+              </NavLink>
+            </MenuItem>
+          </MenuList>
+        </Wrapper>
         <ButtonLogout
           variant="contained"
           fullWidth
