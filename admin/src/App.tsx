@@ -71,7 +71,7 @@ function App() {
                   <Profile />
                 </MainLayout>
               ) : (
-                <NotFound />
+                <Login />
               )
             }
           />
@@ -83,7 +83,7 @@ function App() {
                   <Projects />
                 </MainLayout>
               ) : (
-                <NotFound />
+                <Login />
               )
             }
           />
@@ -95,7 +95,7 @@ function App() {
                   <Skills />
                 </MainLayout>
               ) : (
-                <NotFound />
+                <Login />
               )
             }
           />
@@ -107,7 +107,7 @@ function App() {
                   <Contacts />
                 </MainLayout>
               ) : (
-                <NotFound />
+                <Login />
               )
             }
           />
