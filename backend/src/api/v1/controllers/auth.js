@@ -81,8 +81,12 @@ export const authController = {
       !isValidPassword &&
         res.status(401).json({ message: "Password incorrect" });
 
+      // CREATE TOKEN
       const token = jwtToken(user._id);
       res.setHeader("access_token", token);
+      user.token = token;
+      user.save();
+
       res.status(200).json({ data: user, message: "Login successful" });
     } catch (error) {
       next(error);

@@ -4,6 +4,8 @@ import SocialProfile from "~/components/Profile/Social/SocialProfile";
 import About from "~/components/Profile/About";
 import HeaderProfile from "~/components/Profile/HeaderProfile";
 import { Container, Heading } from "./profileStyles";
+import PostForm from "~/components/Post/PostCreate";
+import PostList from "~/components/Post/PostList";
 type Props = {};
 
 const Profile = (props: Props) => {
@@ -34,7 +36,7 @@ const Profile = (props: Props) => {
         }}
         spacing={1.5}
       >
-        <Grid item desktop={6} laptop={6} tablet={12} mobile={12}>
+        <Grid item desktop={5} laptop={5} tablet={12} mobile={12}>
           <Box>
             <About />
           </Box>
@@ -46,9 +48,9 @@ const Profile = (props: Props) => {
             <SocialProfile />
           </Box>
         </Grid>
-        <Grid item desktop={6} laptop={6} tablet={12} mobile={12}>
-          {/* <SocialProfile /> */}
-          post
+        <Grid item desktop={7} laptop={7} tablet={12} mobile={12}>
+          <PostForm />
+          <PostList />
         </Grid>
       </Grid>
     </Container>

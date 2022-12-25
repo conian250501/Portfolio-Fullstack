@@ -10,7 +10,7 @@ export const Container = styled("header")(({ theme }) => ({
   justifyContent: "space-between",
   boxShadow: theme.mixins.toolbar.boxShadow,
   padding: "10px 12px",
-  zIndex: 1000000000,
+  zIndex: 1,
 }));
 export const IconSearch = styled("div")(({ theme }) => ({
   width: 40,
