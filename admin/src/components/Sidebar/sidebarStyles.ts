@@ -40,7 +40,7 @@ export const Container = styled("div")<ContainerProps>(
       position: openMobile ? "fixed" : "relative",
       top: 0,
       left: 0,
-      zIndex: 20000,
+      zIndex: 2,
       display: openMobile ? "flex" : "none",
       transform: openMobile ? "translateX(0)" : "translateX(-400px)",
     },
@@ -48,7 +48,7 @@ export const Container = styled("div")<ContainerProps>(
       position: openMobile ? "fixed" : "relative",
       top: 0,
       left: openMobile ? 0 : "-400px",
-      zIndex: 20000,
+      zIndex: 2,
       width: "80%",
       display: openMobile ? "flex" : "none",
       transform: openMobile ? "translateX(0)" : "translateX(-300px)",
@@ -73,7 +73,7 @@ export const Wrapper = styled("div")<WrapperProps>(({ theme, maxsize }) => ({
 export const BackgroundModal = styled("div")<BackgroundModalProps>(
   ({ theme }) => ({
     position: "absolute",
-    zIndex: 1000,
+    zIndex: 1,
     width: "100vw",
     height: "100vh",
     backgroundColor: "rgba(0,0,0,0.4)",

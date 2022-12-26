@@ -13,6 +13,7 @@ export interface LoginTypes {
 
 export interface UserTypes {
   id: string;
+  avatar: string;
   email: string;
   userName: string;
   nickName: string;

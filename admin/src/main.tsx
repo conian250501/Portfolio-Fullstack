@@ -8,6 +8,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from "./global/styles/customThemes";
 import "./global/styles/globalStyles.scss";
 import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // Store
 import { Provider } from "react-redux";

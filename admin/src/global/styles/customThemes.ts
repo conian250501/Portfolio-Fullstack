@@ -83,6 +83,7 @@ export const theme = createTheme({
       ] as Fontface,
       fontFamily: "Syne,sans-serif !important",
       paddingLeft: "20px",
+      padding: "18px 16px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",

@@ -1,5 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import { useAppSelector } from "~/app/hooks";
+import { getUser } from "~/featureds/Auth/authSlice";
 import {
   Avatar,
   Container,
@@ -11,6 +13,7 @@ import {
 type Props = {};
 
 const HeaderProfile = (props: Props) => {
+  const user = useAppSelector(getUser);
   return (
     <Container>
       <ImageCover>
@@ -21,7 +24,14 @@ const HeaderProfile = (props: Props) => {
       </ImageCover>
       <UserInfo>
         <Avatar>
-          <img src="/assets/images/avatar-placeholder.jpg" alt="" />
+          <img
+            src={
+              user?.avatar
+                ? user.avatar
+                : "/assets/images/avatar-placeholder.png"
+            }
+            alt=""
+          />
         </Avatar>
         <Info>
           <Typography className="name">Minh Tai</Typography>

@@ -95,7 +95,7 @@ export const authSlice = createSlice({
       }
     );
 
-    // LGOUT
+    // LOGOUT
     builder.addCase(logoutAsync.pending, (state) => {
       state.loading = true;
     });
@@ -120,5 +120,7 @@ export const authSlice = createSlice({
 
 export const getIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
+
+export const getUser = (state: RootState) => state.auth.user;
 
 export default authSlice.reducer;
