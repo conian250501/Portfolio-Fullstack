@@ -52,3 +52,11 @@ export const ButtonLogout = styled(Typography)(({ theme }) => ({
   color: "red",
   cursor: "pointer",
 }));
+
+export const SettingLink = styled("div")(({ theme }) => ({
+  padding: "8px 12px",
+  borderRadius: 4,
+  ":hover": {
+    backgroundColor: theme.palette.primary.contrastText,
+  },
+}));

@@ -14,25 +14,25 @@ import {
   Wrapper,
 } from "./sidebarStyles";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import ContactEmergencyIcon from "@mui/icons-material/ContactEmergency";
 import DataObjectIcon from "@mui/icons-material/DataObject";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
 
-import { Typography } from "@mui/material";
+import { Menu, Typography } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { logoutAsync } from "../../featureds/Auth/authActions";
-import {
-  closeSidebar,
-  getOpenSidebar,
-} from "../../featureds/Header/sidebarSlice";
+import { useAppDispatch, useAppSelector } from "~/app/hooks";
+import { logoutAsync } from "~/featureds/Auth/authActions";
+import { closeSidebar, getOpenSidebar } from "~/featureds/Header/sidebarSlice";
+import SidebarItem from "./SidebarItem";
+import { getUser } from "~/featureds/Auth/authSlice";
 
 const Sidebar: React.FC = () => {
-  const [maxsize, setMaxsize] = useState(true);
   const dispatch = useAppDispatch();
-  const isOpenSidebar = useAppSelector(getOpenSidebar);
+  const [maxsize, setMaxsize] = useState(true);
 
+  const isOpenSidebar = useAppSelector(getOpenSidebar);
+  const user = useAppSelector(getUser);
   useEffect(() => {
     if (isOpenSidebar) {
       setMaxsize(true);
@@ -63,7 +63,11 @@ const Sidebar: React.FC = () => {
             <Link to="/profile">
               <UserAvatar maxsize={`${maxsize}`}>
                 <img
-                  src="/assets/images/avatar-placeholder.jpg"
+                  src={
+                    user?.avatar
+                      ? user.avatar
+                      : "/assets/images/avatar-placeholder.png"
+                  }
                   alt=""
                   className="user_avatar"
                 />
@@ -79,7 +83,7 @@ const Sidebar: React.FC = () => {
           <MenuList>
             <MenuLabel maxsize={`${maxsize}`}>General</MenuLabel>
             <MenuItem maxsize={`${maxsize}`}>
-              <NavLink to="/" end>
+              <NavLink to="/" end className={"menu_link"}>
                 <DashboardIcon className="icon" />
                 <Typography className="content">Dashboard</Typography>
               </NavLink>
@@ -87,22 +91,38 @@ const Sidebar: React.FC = () => {
 
             <MenuLabel maxsize={`${maxsize}`}>Management</MenuLabel>
             <MenuItem maxsize={`${maxsize}`}>
-              <NavLink to="/projects">
-                <AccountTreeIcon className="icon" />
-                <Typography className="content">Projects</Typography>
-              </NavLink>
+              <SidebarItem
+                maxSize={maxsize}
+                icon={<AccountTreeIcon className="icon" />}
+                name={"Projects"}
+                links={[
+                  { title: "All", url: "/project/all" },
+                  { title: "Create Project", url: "/project/create-project" },
+                  { title: "Create Type", url: "/project/create-type" },
+                ]}
+              />
             </MenuItem>
             <MenuItem maxsize={`${maxsize}`}>
-              <NavLink to="/skills">
-                <DataObjectIcon className="icon" />
-                <Typography className="content">Skils</Typography>
-              </NavLink>
+              <SidebarItem
+                maxSize={maxsize}
+                icon={<DataObjectIcon className="icon" />}
+                name={"Skills"}
+                links={[
+                  { title: "All", url: "/skill/all" },
+                  { title: "Create", url: "/skill/create" },
+                ]}
+              />
             </MenuItem>
             <MenuItem maxsize={`${maxsize}`}>
-              <NavLink to="/contacts">
-                <ContactEmergencyIcon className="icon" />
-                <Typography className="content">Contacts</Typography>
-              </NavLink>
+              <SidebarItem
+                maxSize={maxsize}
+                icon={<ContactEmergencyIcon className="icon" />}
+                name={"Contacts"}
+                links={[
+                  { title: "All", url: "/contact/all" },
+                  { title: "Create", url: "/contact/create" },
+                ]}
+              />
             </MenuItem>
           </MenuList>
         </Wrapper>

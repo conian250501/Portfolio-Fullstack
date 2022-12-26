@@ -9,7 +9,7 @@ export const registerAsync = createAsyncThunk(
     try {
       const { data } = await apiClient.post("/api/v1/register", payload);
 
-      return data;
+      return data.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
@@ -38,7 +38,8 @@ export const checkLoginAsync = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      return data.data;
+
+      return data.user;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }

@@ -106,7 +106,7 @@ export const authController = {
     }
   },
   checkLogin: async (req, res, next) => {
-    console.log(req.user);
-    return res.status(200).json({ isLoggedIn: true });
+    const user = await userService.findById(req.user.userId);
+    return res.status(200).json({ user, isLoggedIn: true });
   },
 };

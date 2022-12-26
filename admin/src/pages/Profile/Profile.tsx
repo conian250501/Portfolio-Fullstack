@@ -1,11 +1,12 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import ProfileBreakcrumb from "~/components/Breakcrumb/Profile/ProfileBreakcrumb";
 import SocialProfile from "~/components/Profile/Social/SocialProfile";
 import About from "~/components/Profile/About";
 import HeaderProfile from "~/components/Profile/HeaderProfile";
 import { Container, Heading } from "./profileStyles";
-import PostForm from "~/components/Post/PostCreate";
-import PostList from "~/components/Post/PostList";
+import PostForm from "~/components/Profile/Post/PostCreate";
+import PostList from "~/components/Profile/Post/PostList";
+import { Link } from "react-router-dom";
 type Props = {};
 
 const Profile = (props: Props) => {
@@ -15,7 +16,25 @@ const Profile = (props: Props) => {
 
       {/* Breakcrumb */}
       <Box component={"div"} sx={{ marginTop: "12px" }}>
-        <ProfileBreakcrumb />
+        <ProfileBreakcrumb
+          breadcrumbs={[
+            <Link to="/" key={1}>
+              <Typography sx={{ fontSize: "14px", color: "#000" }}>
+                Dashboard
+              </Typography>
+            </Link>,
+            <Link to="/profile" key={2}>
+              <Typography
+                sx={{ fontSize: "14px", fontWeight: 500, color: "#000" }}
+              >
+                Profile
+              </Typography>
+            </Link>,
+            <Typography sx={{ fontSize: "14px", fontWeight: 500 }} key={3}>
+              Conian guys
+            </Typography>,
+          ]}
+        />
       </Box>
 
       {/* Header Profile */}
