@@ -76,8 +76,13 @@ const SidebarItem = ({ maxSize, links, icon, name }: Props) => {
       >
         <LinkList>
           {links.map((link, index) => (
-            <NavLink to={`${link.url}`} key={index}>
-              <LinkItem>
+            <NavLink
+              to={`${link.url}`}
+              key={index}
+              end
+              className="sidebar_link"
+            >
+              <LinkItem className="sidebar_link-item">
                 <ForkRightIcon className="icon" />
                 {link.title}
               </LinkItem>
