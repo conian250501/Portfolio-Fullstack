@@ -38,7 +38,23 @@ export const MenuItem = styled("div")<MenuItemProps>(({ theme, maxsize }) => ({
   },
 }));
 
-export const LinkList = styled("div")(({ theme }) => ({}));
+export const LinkList = styled("div")(({ theme }) => ({
+  ".sidebar_link": {
+    display: "block",
+    ":not(:first-child)": {
+      marginTop: 8,
+    },
+  },
+  ".active .sidebar_link-item": {
+    background: theme.palette.primary.main,
+    color: "#Fff",
+    transition: theme.mixins.toolbar.transition,
+
+    ".icon": {
+      color: "#Fff",
+    },
+  },
+}));
 export const LinkItem = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -48,6 +64,8 @@ export const LinkItem = styled("div")(({ theme }) => ({
   fontSize: "14px",
   fontWeight: "500",
   borderRadius: 4,
+
+  transition: theme.mixins.toolbar.transition,
   ":hover": {
     backgroundColor: theme.palette.primary.contrastText,
   },
