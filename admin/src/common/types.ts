@@ -26,3 +26,26 @@ export interface UserTypes {
   token: string;
   message: string;
 }
+
+// PROJECT TYPES
+export interface LinkTypes {
+  label: string;
+  url: string;
+}
+export interface ProjectTypes {
+  _id: string | number;
+  image: string;
+  name: string;
+  description: string;
+  type: string | number;
+  link: LinkTypes[];
+  technologies: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+export interface TypeOfProject {
+  _id: string | number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}

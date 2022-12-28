@@ -1,6 +1,16 @@
 import { typeProjectService } from "../services/typeProject";
 
 export const typeProjectController = {
+  getAllType: async (req, res, next) => {
+    try {
+      const types = await typeProjectService.getAll();
+      res
+        .status(200)
+        .json({ data: types, message: "get all types successfully" });
+    } catch (error) {
+      next(error);
+    }
+  },
   createType: async (req, res, next) => {
     try {
       const { name } = req.body;

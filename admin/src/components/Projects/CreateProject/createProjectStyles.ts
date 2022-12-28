@@ -34,7 +34,7 @@ export const ImgResult = styled("div")(({ theme }) => ({
 export const MoreTechnologyIcon = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "flex-end",
+  justifyContent: "flex-start",
   marginTop: "10px",
   ".content": {
     fontSize: 12,

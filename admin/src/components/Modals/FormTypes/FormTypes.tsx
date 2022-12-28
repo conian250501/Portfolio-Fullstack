@@ -8,6 +8,10 @@ import {
   Button,
 } from "@mui/material";
 import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useAppDispatch } from "~/app/hooks";
+import { ProjectTypes } from "~/common/types";
+import { createTypeProject } from "~/featureds/project/projectActions";
 
 type Props = {
   isOpen: boolean;
@@ -16,7 +20,12 @@ type Props = {
 };
 
 const FormTypes = ({ isOpen, onClose, isUpdate }: Props) => {
-  const [name, setName] = useState("");
+  const { register, handleSubmit, setValue } = useForm<ProjectTypes>();
+  const dispatch = useAppDispatch();
+  const handleCreateType: SubmitHandler<ProjectTypes> = (data) => {
+    dispatch(createTypeProject(data));
+    setValue("name", "");
+  };
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -32,6 +41,7 @@ const FormTypes = ({ isOpen, onClose, isUpdate }: Props) => {
       <Fade in={isOpen}>
         <Box
           component="form"
+          onSubmit={handleSubmit(handleCreateType)}
           sx={{
             position: "absolute",
             top: "50%",
@@ -54,11 +64,11 @@ const FormTypes = ({ isOpen, onClose, isUpdate }: Props) => {
           </Typography>
 
           <TextField
-            value={name}
             placeholder="enter new type project..."
             label="Project's type"
             fullWidth
-            onChange={(e) => setName(e.target.value)}
+            required
+            {...register("name", { required: true })}
           />
           <Button
             type="submit"
@@ -72,7 +82,7 @@ const FormTypes = ({ isOpen, onClose, isUpdate }: Props) => {
               ":hover": { background: "rgb(58, 43, 186)" },
             }}
           >
-            Add
+            {isUpdate ? "update" : "Add"}
           </Button>
         </Box>
       </Fade>

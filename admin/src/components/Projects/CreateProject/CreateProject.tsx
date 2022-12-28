@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ProfileBreakcrumb from "~/components/Breakcrumb/Profile/ProfileBreakcrumb";
 import TableTypes from "~/components/Tables/TableTypes";
@@ -24,6 +24,9 @@ import {
   MoreTechnologyIcon,
 } from "./createProjectStyles";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import { useAppDispatch, useAppSelector } from "~/app/hooks";
+import { getAllType } from "~/featureds/project/projectSlice";
+import { getAllTypeProject } from "~/featureds/project/projectActions";
 
 interface DataTypes {
   name: string;
@@ -34,8 +37,15 @@ interface DataTypes {
   links: [];
 }
 
+interface LinkTypes {
+  label: string;
+  url: string;
+}
+
 const CreateProject = () => {
   const [technologies, setTechnologies] = useState<string[]>([]);
+  const [links, setLinks] = useState<LinkTypes[]>([]);
+
   const [data, setData] = useState<DataTypes>({
     name: "",
     description: "",
@@ -45,23 +55,56 @@ const CreateProject = () => {
     links: [],
   });
 
-  const handleAddField = () => {
+  const dispatch = useAppDispatch();
+  const allTypeOfProject = useAppSelector(getAllType);
+
+  useEffect(() => {
+    dispatch(getAllTypeProject());
+  }, []);
+
+  // FIELD TECHNOLOGY
+  const handleAddFieldTech = () => {
     const newTechnologies: any = [...technologies, []];
     setTechnologies(newTechnologies);
   };
-  const handleChangeTechnology = (value: any, i: number) => {
-    const inputdata = [...technologies];
-    inputdata[i] = value.target.value;
-    setTechnologies(inputdata);
+  const handleChangeTechnology = (value: string, i: number) => {
+    const newTechnologies = [...technologies];
+    newTechnologies[i] = value;
+    setTechnologies(newTechnologies);
   };
-  const handleDeleteField = (i: number) => {
-    const technologyClone = [...technologies];
-    technologyClone.splice(i, 1);
-    setTechnologies(technologyClone);
+  const handleDeleteFieldTech = (i: number) => {
+    const newTechnologies = [...technologies];
+    newTechnologies.splice(i, 1);
+    setTechnologies(newTechnologies);
   };
+
+  // FIELD LINK
+  const handleAddFieldLink = () => {
+    const newLinks: LinkTypes[] = [...links, { label: "", url: "" }];
+    setLinks(newLinks);
+  };
+
+  const handleChangeLabel = (value: string, currentInput: number) => {
+    const newLinks: LinkTypes[] = [...links];
+    newLinks[currentInput].label = value;
+    setLinks(newLinks);
+  };
+  const handleChangeUrl = (value: string, currentInput: number) => {
+    const newLinks: LinkTypes[] = [...links];
+    newLinks[currentInput].url = value;
+    setLinks(newLinks);
+  };
+
+  const handleDeleteFieldLink = (currentInput: number) => {
+    const newLinks: LinkTypes[] = [...links];
+    newLinks.splice(currentInput, 1);
+    setLinks(newLinks);
+  };
+
+  // SUBMIT
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log({ ...data, technologies });
+    console.log({ ...data, technologies, links });
   };
 
   return (
@@ -94,6 +137,8 @@ const CreateProject = () => {
                 background: "#fff",
                 padding: 2,
                 borderRadius: 1.2,
+                height: "calc(100vh - 180px)",
+                overflowY: "scroll",
               }}
             >
               <InputForm
@@ -126,33 +171,46 @@ const CreateProject = () => {
                 background: "#fff",
                 padding: 2,
                 borderRadius: 1.2,
+                height: "calc(100vh - 180px)",
+                overflowY: "scroll",
               }}
             >
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Type"
-                value="poster"
+                value={data.type}
+                onChange={(e) => setData({ ...data, type: e.target.value })}
                 fullWidth
               >
-                <MenuItem value={"web-code"}>web-code</MenuItem>
-                <MenuItem value={"web-design"}>web-design</MenuItem>
-                <MenuItem value={"poster"}>poster</MenuItem>
+                {allTypeOfProject?.length > 0 &&
+                  allTypeOfProject.map((type) => (
+                    <MenuItem key={type._id} value={"" + type.name}>
+                      {type.name}
+                    </MenuItem>
+                  ))}
               </Select>
 
+              {/* ===== Field Technology ==== */}
+              <MoreTechnologyIcon onClick={handleAddFieldTech}>
+                <AddBoxIcon className="icon" />
+                <Typography className="content">More technology</Typography>
+              </MoreTechnologyIcon>
               {technologies.map((inputValue, index) => (
                 <InputForm
                   key={index}
                   value={inputValue}
-                  onChange={(e) => handleChangeTechnology(e, index)}
-                  label="technologies"
-                  placeholder="technologies..."
+                  onChange={(e) =>
+                    handleChangeTechnology(e.target.value, index)
+                  }
+                  label={`technology ${index + 1}`}
+                  placeholder="technology..."
                   fullWidth
                   InputProps={{
                     endAdornment: (
                       <InputAdornment
                         position="end"
-                        onClick={() => handleDeleteField(index)}
+                        onClick={() => handleDeleteFieldTech(index)}
                       >
                         <ClearIcon
                           className="icon"
@@ -167,10 +225,48 @@ const CreateProject = () => {
                   }}
                 />
               ))}
-              <MoreTechnologyIcon onClick={handleAddField}>
-                <Typography className="content">More technology</Typography>
+
+              {/* ===== Field Link ==== */}
+              <MoreTechnologyIcon onClick={handleAddFieldLink}>
                 <AddBoxIcon className="icon" />
+                <Typography className="content">More link</Typography>
               </MoreTechnologyIcon>
+              {links.map((link, index) => (
+                <Box component="div" key={index} sx={{ marginTop: 2 }}>
+                  <InputForm
+                    label={`Label ${index + 1}`}
+                    placeholder="label link..."
+                    value={link.label}
+                    onChange={(e) => handleChangeLabel(e.target.value, index)}
+                    fullWidth
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment
+                          position="end"
+                          onClick={() => handleDeleteFieldLink(index)}
+                        >
+                          <ClearIcon
+                            className="icon"
+                            sx={{
+                              fontSize: 24,
+                              color: "#000",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+
+                  <InputForm
+                    value={link.url}
+                    onChange={(e) => handleChangeUrl(e.target.value, index)}
+                    label={`url ${index + 1}`}
+                    placeholder="url..."
+                    fullWidth
+                  />
+                </Box>
+              ))}
 
               <ButtonSubmit type="submit">Create project</ButtonSubmit>
             </Box>

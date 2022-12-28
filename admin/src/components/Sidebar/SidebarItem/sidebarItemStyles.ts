@@ -41,7 +41,7 @@ export const MenuItem = styled("div")<MenuItemProps>(({ theme, maxsize }) => ({
 export const LinkList = styled("div")(({ theme }) => ({
   ".sidebar_link": {
     display: "block",
-    ":not(:first-child)": {
+    ":not(:first-of-type)": {
       marginTop: 8,
     },
   },

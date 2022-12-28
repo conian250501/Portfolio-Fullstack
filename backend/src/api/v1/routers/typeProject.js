@@ -4,6 +4,11 @@ import { authMiddleware } from "../middlewares/auth";
 import { roleMiddleware } from "../middlewares/role";
 export const typeProjectRouter = express.Router();
 
+typeProjectRouter.get(
+  "/all",
+  authMiddleware.verifyToken,
+  typeProjectController.getAllType
+);
 typeProjectRouter.post(
   "/create",
   authMiddleware.verifyToken,

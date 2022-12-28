@@ -8,10 +8,19 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "~/app/hooks";
 import FormTypes from "~/components/Modals/FormTypes";
 import {
+  deleteTypeProject,
+  getAllTypeProject,
+} from "~/featureds/project/projectActions";
+import { getAllType } from "~/featureds/project/projectSlice";
+import moment from "moment";
+import ClearIcon from "@mui/icons-material/Clear";
+import {
   CellCreateAt,
+  CellDeleteIcon,
   CellEditIcon,
   CellId,
   CellName,
@@ -32,6 +41,13 @@ const TableTypes = (props: Props) => {
   const [page, setPage] = React.useState(0);
   const [openForm, setOpenForm] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const allTypeOfProject = useAppSelector(getAllType);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllTypeProject());
+  }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -59,29 +75,20 @@ const TableTypes = (props: Props) => {
     },
     {
       id: "edit",
-      label: "Edit",
+      label: "",
+    },
+    {
+      id: "delete",
+      label: "",
     },
   ];
 
-  const rows: Data[] = [
-    {
-      id: 1,
-      name: "poster",
-      createdAt: "12-12-2022",
-    },
-    {
-      id: 2,
-      name: "web-code",
-      createdAt: "12-12-2022",
-    },
-    {
-      id: 3,
-      name: "web-design",
-      createdAt: "12-12-2022",
-    },
-  ];
   const handleOpenForm = () => setOpenForm(true);
   const handleCloseForm = () => setOpenForm(false);
+
+  const handleDeleteType = (id: string | number) => {
+    dispatch(deleteTypeProject(id));
+  };
 
   return (
     <>
@@ -101,18 +108,20 @@ const TableTypes = (props: Props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {allTypeOfProject
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row._id}>
                   <TableCell>
-                    <CellId>{row.id}</CellId>
+                    <CellId>{row._id}</CellId>
                   </TableCell>
                   <TableCell>
                     <CellName>{row.name}</CellName>
                   </TableCell>
                   <TableCell>
-                    <CellCreateAt>{row.createdAt}</CellCreateAt>
+                    <CellCreateAt>
+                      {moment(row.createdAt).fromNow()}
+                    </CellCreateAt>
                   </TableCell>
                   <TableCell>
                     <CellEditIcon onClick={handleOpenForm}>
@@ -124,6 +133,11 @@ const TableTypes = (props: Props) => {
                       onClose={handleCloseForm}
                     />
                   </TableCell>
+                  <TableCell>
+                    <CellDeleteIcon onClick={() => handleDeleteType(row._id)}>
+                      <ClearIcon className="icon" />
+                    </CellDeleteIcon>
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>
@@ -133,7 +147,7 @@ const TableTypes = (props: Props) => {
       <TablePagination
         rowsPerPageOptions={[]}
         component="div"
-        count={rows.length}
+        count={allTypeOfProject.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
