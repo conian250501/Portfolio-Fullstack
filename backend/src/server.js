@@ -22,8 +22,8 @@ connectMongoDB
 app.use(cors());
 app.use(morgan("dev"));
 app.use(helmet());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "100000mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "1000000mb" }));
 
 // SET ROUTER
 app.use("/api/v1", apiRouter);

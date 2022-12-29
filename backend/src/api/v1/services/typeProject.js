@@ -6,6 +6,10 @@ export const typeProjectService = {
     const types = await TypeProject.find({});
     return types;
   },
+  findById: async (id) => {
+    const type = await TypeProject.findById(id);
+    return type;
+  },
   findByName: async (name) => {
     const typeProject = await TypeProject.findOne({ name });
     if (typeProject) return typeProject;

@@ -9,6 +9,11 @@ typeProjectRouter.get(
   authMiddleware.verifyToken,
   typeProjectController.getAllType
 );
+typeProjectRouter.get(
+  "/:id",
+  authMiddleware.verifyToken,
+  typeProjectController.getType
+);
 typeProjectRouter.post(
   "/create",
   authMiddleware.verifyToken,

@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useAppSelector } from "~/app/hooks";
-import { getUser } from "~/featureds/Auth/authSlice";
+import { getUser } from "~/featureds/auth/authSlice";
 import {
   Avatar,
   Container,

@@ -11,6 +11,18 @@ export const typeProjectController = {
       next(error);
     }
   },
+  getType: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const type = await typeProjectService.findById(id);
+
+      type
+        ? res.status(200).json({ data: type, message: "get type successfully" })
+        : res.status(200).json({ message: "Type not found" });
+    } catch (error) {
+      next(error);
+    }
+  },
   createType: async (req, res, next) => {
     try {
       const { name } = req.body;

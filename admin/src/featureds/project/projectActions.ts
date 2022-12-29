@@ -4,55 +4,35 @@ import { apiClient } from "~/api/apiClient";
 import { ProjectTypes } from "~/common/types";
 
 const token = Cookies.get("access_token");
-
-export const createTypeProject = createAsyncThunk(
-  "createTypeProject",
-  async (payload: ProjectTypes) => {
+export const getAllProject = createAsyncThunk(
+  "getAllProject",
+  async (_, { rejectWithValue }) => {
     try {
-      const { data } = await apiClient.post(
-        "/api/v1/types_project/create",
-        payload,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      return data.data;
-    } catch (error) {
-      return error;
-    }
-  }
-);
-export const getAllTypeProject = createAsyncThunk(
-  "getAllTypeProject",
-  async () => {
-    try {
-      const { data } = await apiClient.get("/api/v1/types_project/all", {
-        headers: { Authorization: `Bearer ${token}` },
+      const { data } = await apiClient.get("api/v1/project/get_all", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+
       return data.data;
-    } catch (error) {
-      return error;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
     }
   }
 );
-export const updateTypeProject = createAsyncThunk(
-  "updateTypeProject",
-  async (id: string | number) => {}
-);
-export const deleteTypeProject = createAsyncThunk(
-  "deleteTypeProject",
-  async (id: string | number) => {
+export const createProject = createAsyncThunk(
+  "createProject",
+  async (payload: ProjectTypes, { rejectWithValue }) => {
     try {
-      const { data } = await apiClient.delete(
-        `/api/v1/types_project/delete/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      console.log(data);
-      return { id };
-    } catch (error) {
-      return error;
+      const { data } = await apiClient.post("api/v1/project/create", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return data.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
     }
   }
 );

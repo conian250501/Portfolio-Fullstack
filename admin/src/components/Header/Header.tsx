@@ -2,7 +2,7 @@ import DragHandleIcon from "@mui/icons-material/DragHandle";
 import LocationSearchingIcon from "@mui/icons-material/LocationSearching";
 import React from "react";
 import { useAppDispatch } from "../../app/hooks";
-import { openSidebar } from "../../featureds/Header/sidebarSlice";
+import { openSidebar } from "../../featureds/header/sidebarSlice";
 import CountryLanguage from "../Tooltip/CountryLanguage";
 import Notification from "../Tooltip/Notification";
 import SettingUser from "../Tooltip/SettingUser";

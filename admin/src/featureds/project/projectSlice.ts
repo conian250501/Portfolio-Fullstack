@@ -1,16 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { RootState } from "~/app/store";
 import { ProjectTypes, TypeOfProject } from "~/common/types";
-import {
-  createTypeProject,
-  deleteTypeProject,
-  getAllTypeProject,
-} from "./projectActions";
+import { createProject, getAllProject } from "./projectActions";
 
 interface StateTypes {
   loading: boolean;
   projects: ProjectTypes[];
-  types: TypeOfProject[];
+  project: ProjectTypes | null;
 }
 
 const initialState: StateTypes = {
@@ -21,14 +18,14 @@ const initialState: StateTypes = {
       image: "",
       name: "",
       description: "",
-      type: "",
-      link: [],
-      technologies: [],
+      type: { _id: "", name: "", createdAt: "", updatedAt: "" },
+      links: [],
+      technologicals: [],
       createdAt: "",
       updatedAt: "",
     },
   ],
-  types: [],
+  project: null,
 };
 
 const projectSlice = createSlice({
@@ -36,58 +33,40 @@ const projectSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // CREATE TYPE
-    builder.addCase(createTypeProject.pending, (state) => {
+    // GET ALL
+    builder.addCase(getAllProject.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(
-      createTypeProject.fulfilled,
-      (state, action: PayloadAction<TypeOfProject>) => {
+      getAllProject.fulfilled,
+      (state, action: PayloadAction<ProjectTypes[]>) => {
         state.loading = false;
-        state.types.unshift(action.payload);
+        state.projects = action.payload;
       }
     );
-    builder.addCase(createTypeProject.rejected, (state, action) => {
-      state.loading = false;
-      state.types = [];
+    builder.addCase(getAllProject.rejected, (state) => {
+      state.loading = true;
     });
 
-    // GET ALL TYPES
-    builder.addCase(getAllTypeProject.pending, (state) => {
+    // CREATE
+    builder.addCase(createProject.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(
-      getAllTypeProject.fulfilled,
-      (state, action: PayloadAction<TypeOfProject[]>) => {
+      createProject.fulfilled,
+      (state, action: PayloadAction<ProjectTypes>) => {
+        toast("Create successfully");
         state.loading = false;
-        state.types = action.payload;
+        state.projects.push(action.payload);
       }
     );
-    builder.addCase(getAllTypeProject.rejected, (state, action) => {
-      state.loading = false;
-      state.types = [];
-    });
-
-    // DELETE TYPE
-    builder.addCase(deleteTypeProject.pending, (state) => {
+    builder.addCase(createProject.rejected, (state) => {
       state.loading = true;
-    });
-    builder.addCase(
-      deleteTypeProject.fulfilled,
-      (state, action: PayloadAction<any>) => {
-        state.loading = false;
-        state.types = state.types.filter(
-          (type) => type._id !== action.payload.id
-        );
-      }
-    );
-    builder.addCase(deleteTypeProject.rejected, (state, action) => {
-      state.loading = false;
-      state.types = [];
     });
   },
 });
 
-export const getAllType = (state: RootState) => state.project.types;
-
+export const selectLoadingProject = (state: RootState) => state.project.loading;
+export const selectAllProject = (state: RootState) => state.project.projects;
+export const selectProject = (state: RootState) => state.project.project;
 export default projectSlice.reducer;

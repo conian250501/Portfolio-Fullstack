@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import projectReducer from "~/featureds/project/projectSlice";
-import authReducer from "../featureds/Auth/authSlice";
-import sidebarReducer from "../featureds/Header/sidebarSlice";
+import typeProjectReducer from "~/featureds/typeProject/typeProjectSlice";
+import authReducer from "../featureds/auth/authSlice";
+import sidebarReducer from "../featureds/header/sidebarSlice";
 
 export const rootReducer = combineReducers({
   auth: authReducer,
   sidebar: sidebarReducer,
   project: projectReducer,
+  typeProject: typeProjectReducer,
 });
 
 const store = configureStore({

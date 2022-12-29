@@ -7,9 +7,9 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { LoginTypes } from "../../common/types";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { loginAsync } from "../../featureds/Auth/authActions";
+import { loginAsync } from "../../featureds/auth/authActions";
 import { ToastContainer } from "react-toastify";
-import { getIsAuthenticated } from "../../featureds/Auth/authSlice";
+import { getIsAuthenticated } from "../../featureds/auth/authSlice";
 
 const Login: React.FC = () => {
   const classes = useStyles();

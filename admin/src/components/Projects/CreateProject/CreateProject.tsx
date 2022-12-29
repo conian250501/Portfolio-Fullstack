@@ -1,18 +1,22 @@
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import ClearIcon from "@mui/icons-material/Clear";
 import {
-  Autocomplete,
   Box,
   Grid,
   InputAdornment,
   MenuItem,
   Select,
-  TextField,
   Typography,
 } from "@mui/material";
-import ClearIcon from "@mui/icons-material/Clear";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { useAppDispatch, useAppSelector } from "~/app/hooks";
+import { ProjectTypes, TypeOfProject } from "~/common/types";
 import ProfileBreakcrumb from "~/components/Breakcrumb/Profile/ProfileBreakcrumb";
-import TableTypes from "~/components/Tables/TableTypes";
+import { createProject } from "~/featureds/project/projectActions";
+import { getAllTypeProject } from "~/featureds/typeProject/typeProjectActions";
+import { getAllType } from "~/featureds/typeProject/typeProjectSlice";
 import {
   ButtonSubmit,
   Container,
@@ -23,17 +27,12 @@ import {
   LabelImage,
   MoreTechnologyIcon,
 } from "./createProjectStyles";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import { useAppDispatch, useAppSelector } from "~/app/hooks";
-import { getAllType } from "~/featureds/project/projectSlice";
-import { getAllTypeProject } from "~/featureds/project/projectActions";
-
 interface DataTypes {
   name: string;
   description: string;
   image: string;
   type: string;
-  technologies: string[];
+  technologicals: string[];
   links: [];
 }
 
@@ -43,15 +42,14 @@ interface LinkTypes {
 }
 
 const CreateProject = () => {
-  const [technologies, setTechnologies] = useState<string[]>([]);
+  const [technologicals, setTechnologicals] = useState<string[]>([]);
   const [links, setLinks] = useState<LinkTypes[]>([]);
-
   const [data, setData] = useState<DataTypes>({
     name: "",
     description: "",
     image: "",
     type: "",
-    technologies: [],
+    technologicals: [],
     links: [],
   });
 
@@ -64,18 +62,18 @@ const CreateProject = () => {
 
   // FIELD TECHNOLOGY
   const handleAddFieldTech = () => {
-    const newTechnologies: any = [...technologies, []];
-    setTechnologies(newTechnologies);
+    const newTechnologies: any = [...technologicals, []];
+    setTechnologicals(newTechnologies);
   };
   const handleChangeTechnology = (value: string, i: number) => {
-    const newTechnologies = [...technologies];
+    const newTechnologies = [...technologicals];
     newTechnologies[i] = value;
-    setTechnologies(newTechnologies);
+    setTechnologicals(newTechnologies);
   };
   const handleDeleteFieldTech = (i: number) => {
-    const newTechnologies = [...technologies];
+    const newTechnologies = [...technologicals];
     newTechnologies.splice(i, 1);
-    setTechnologies(newTechnologies);
+    setTechnologicals(newTechnologies);
   };
 
   // FIELD LINK
@@ -101,10 +99,34 @@ const CreateProject = () => {
     setLinks(newLinks);
   };
 
+  const handleChangeImage = (e: any) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setData({ ...data, image: reader.result as string });
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   // SUBMIT
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log({ ...data, technologies, links });
+    const payload: ProjectTypes = { ...data, technologicals, links };
+    if (data.image) {
+      dispatch(createProject(payload));
+      setData({
+        name: "",
+        description: "",
+        image: "",
+        type: "",
+        technologicals: [],
+        links: [],
+      });
+    } else {
+      toast("Please select image for project");
+    }
   };
 
   return (
@@ -147,19 +169,33 @@ const CreateProject = () => {
                 label="name"
                 placeholder="name..."
                 fullWidth
+                required
               />
               <InputForm
+                multiline
+                value={data.description}
+                onChange={(e) =>
+                  setData({ ...data, description: e.target.value })
+                }
                 label="description"
                 placeholder="description..."
                 fullWidth
+                required
               />
 
-              <InputImage type="file" hidden id="input_img" />
+              <InputImage
+                type="file"
+                hidden
+                id="input_img"
+                defaultValue={data.image}
+                onChange={handleChangeImage}
+                accept="image/*"
+              />
 
               <LabelImage htmlFor="input_img">Drop or Select file</LabelImage>
 
               <ImgResult>
-                <img src="/assets/images/avatar-placeholder.jpg" alt="" />
+                {data.image && <img src={`${data.image}`} alt="" />}
               </ImgResult>
             </Box>
           </Grid>
@@ -182,9 +218,10 @@ const CreateProject = () => {
                 value={data.type}
                 onChange={(e) => setData({ ...data, type: e.target.value })}
                 fullWidth
+                required
               >
                 {allTypeOfProject?.length > 0 &&
-                  allTypeOfProject.map((type) => (
+                  allTypeOfProject.map((type: TypeOfProject) => (
                     <MenuItem key={type._id} value={"" + type.name}>
                       {type.name}
                     </MenuItem>
@@ -196,10 +233,11 @@ const CreateProject = () => {
                 <AddBoxIcon className="icon" />
                 <Typography className="content">More technology</Typography>
               </MoreTechnologyIcon>
-              {technologies.map((inputValue, index) => (
+              {technologicals.map((inputValue, index) => (
                 <InputForm
                   key={index}
                   value={inputValue}
+                  required
                   onChange={(e) =>
                     handleChangeTechnology(e.target.value, index)
                   }
@@ -234,6 +272,7 @@ const CreateProject = () => {
               {links.map((link, index) => (
                 <Box component="div" key={index} sx={{ marginTop: 2 }}>
                   <InputForm
+                    required
                     label={`Label ${index + 1}`}
                     placeholder="label link..."
                     value={link.label}
@@ -261,6 +300,7 @@ const CreateProject = () => {
                   <InputForm
                     value={link.url}
                     onChange={(e) => handleChangeUrl(e.target.value, index)}
+                    required
                     label={`url ${index + 1}`}
                     placeholder="url..."
                     fullWidth
@@ -273,6 +313,8 @@ const CreateProject = () => {
           </Grid>
         </Grid>
       </Form>
+
+      <ToastContainer theme="dark" />
     </Container>
   );
 };
