@@ -1,13 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { RootState } from "~/app/store";
-import { ProjectTypes, TypeOfProject } from "~/common/types";
-import { createProject, getAllProject } from "./projectActions";
+import {
+  PayloadUpdateProject,
+  ProjectTypes,
+  TypeOfProject,
+} from "~/common/types";
+import {
+  createProject,
+  deleteProject,
+  getAllProject,
+  getDetailProject,
+  updateProject,
+} from "./projectActions";
 
 interface StateTypes {
   loading: boolean;
   projects: ProjectTypes[];
-  project: ProjectTypes | null;
+  project: ProjectTypes;
+  loadingDetail: boolean | null;
 }
 
 const initialState: StateTypes = {
@@ -25,7 +36,18 @@ const initialState: StateTypes = {
       updatedAt: "",
     },
   ],
-  project: null,
+  project: {
+    _id: "",
+    image: "",
+    name: "",
+    description: "",
+    type: { _id: "", name: "", createdAt: "", updatedAt: "" },
+    links: [],
+    technologicals: [],
+    createdAt: "",
+    updatedAt: "",
+  },
+  loadingDetail: null,
 };
 
 const projectSlice = createSlice({
@@ -48,6 +70,21 @@ const projectSlice = createSlice({
       state.loading = true;
     });
 
+    // GET DETAIL
+    builder.addCase(getDetailProject.pending, (state) => {
+      state.loadingDetail = true;
+    });
+    builder.addCase(
+      getDetailProject.fulfilled,
+      (state, action: PayloadAction<ProjectTypes>) => {
+        state.loadingDetail = false;
+        state.project = action.payload;
+      }
+    );
+    builder.addCase(getDetailProject.rejected, (state) => {
+      state.loadingDetail = true;
+    });
+
     // CREATE
     builder.addCase(createProject.pending, (state) => {
       state.loading = true;
@@ -61,6 +98,48 @@ const projectSlice = createSlice({
       }
     );
     builder.addCase(createProject.rejected, (state) => {
+      state.loading = true;
+    });
+
+    // UPDATE
+    builder.addCase(updateProject.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      updateProject.fulfilled,
+      (state, action: PayloadAction<PayloadUpdateProject>) => {
+        state.loading = false;
+        state.projects = state.projects.map((project: any) =>
+          project._id === action.payload.id
+            ? {
+                ...project,
+                image: action.payload.data.image,
+                name: action.payload.data.name,
+                description: action.payload.data.description,
+                type: { ...project.type, name: action.payload.data.type },
+              }
+            : { ...project }
+        );
+      }
+    );
+    builder.addCase(updateProject.rejected, (state) => {
+      state.loading = true;
+    });
+
+    // DELETE
+    builder.addCase(deleteProject.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      deleteProject.fulfilled,
+      (state, action: PayloadAction<string | number>) => {
+        state.loading = false;
+        state.projects = state.projects.filter(
+          (project) => project._id !== action.payload
+        );
+      }
+    );
+    builder.addCase(deleteProject.rejected, (state) => {
       state.loading = true;
     });
   },

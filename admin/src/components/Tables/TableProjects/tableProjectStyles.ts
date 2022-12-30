@@ -11,6 +11,8 @@ export const CellId = styled(Typography)(({ theme }) => ({
 export const CellName = styled(Typography)(({ theme }) => ({
   fontSize: "18px",
   fontWeight: "600",
+  width: "120px",
+  wordBreak: "break-all",
 }));
 export const CellCreateAt = styled(Typography)(({ theme }) => ({
   fontSize: "14px",
@@ -43,7 +45,7 @@ export const CellImage = styled("div")(({ theme }) => ({
     top: 0,
     width: "100%",
     height: "100%",
-    objectFit: "cover",
+    objectFit: "contain",
   },
 }));
 export const CellDeleteIcon = styled("div")(({ theme }) => ({

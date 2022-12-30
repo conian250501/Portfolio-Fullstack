@@ -14,7 +14,11 @@ import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "~/app/hooks";
 import { ProjectTypes } from "~/common/types";
 import FormTypes from "~/components/Modals/FormTypes";
-import { getAllProject } from "~/featureds/project/projectActions";
+import {
+  deleteProject,
+  getAllProject,
+  getDetailProject,
+} from "~/featureds/project/projectActions";
 import {
   selectAllProject,
   selectLoadingProject,
@@ -32,6 +36,9 @@ import {
   CellName,
   CellTypeName,
 } from "./tableProjectStyles";
+import moment from "moment";
+import FormEditProjects from "~/components/Modals/FormEditProjects";
+import { getAllTypeProject } from "~/featureds/typeProject/typeProjectActions";
 
 interface Column {
   id: string;
@@ -51,10 +58,12 @@ type Props = {};
 const TableProjects = (props: Props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [openEdit, setOpenEdit] = React.useState(false);
 
   const dispatch = useAppDispatch();
   const projects = useAppSelector(selectAllProject);
   const loadingProject = useAppSelector(selectLoadingProject);
+
   useEffect(() => {
     dispatch(getAllProject());
   }, []);
@@ -69,6 +78,13 @@ const TableProjects = (props: Props) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const handleOpenEdit = async (id: string | number) => {
+    dispatch(getAllTypeProject());
+    await dispatch(getDetailProject(id));
+    setOpenEdit(true);
+  };
+  const handleCloseEdit = () => setOpenEdit(false);
 
   const columns: readonly Column[] = [
     {
@@ -97,6 +113,10 @@ const TableProjects = (props: Props) => {
       label: "Technologies",
     },
     {
+      id: "links",
+      label: "Links",
+    },
+    {
       id: "createAt",
       label: "Create At",
     },
@@ -109,6 +129,10 @@ const TableProjects = (props: Props) => {
       label: "",
     },
   ];
+
+  const handleDeleteProject = (id: number | string) => {
+    dispatch(deleteProject(id));
+  };
 
   return (
     <>
@@ -136,6 +160,11 @@ const TableProjects = (props: Props) => {
               projects.length >= 0 &&
               projects
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .sort(
+                  (a, b) =>
+                    new Date(b.createdAt).valueOf() -
+                    new Date(a.createdAt).valueOf()
+                )
                 .map((project: ProjectTypes) => (
                   <TableRow key={project._id}>
                     <TableCell>
@@ -188,26 +217,44 @@ const TableProjects = (props: Props) => {
                     <TableCell>
                       <CellCreateAt>{project.technologicals}</CellCreateAt>
                     </TableCell>
+
                     <TableCell>
-                      <CellCreateAt>{project.createdAt}</CellCreateAt>
+                      {project.links.map((link, index) => (
+                        <a
+                          key={index}
+                          href={`${link.url}`}
+                          style={{
+                            color: "blue",
+                            textDecoration: "underline",
+                          }}
+                        >
+                          {link.label}
+                        </a>
+                      ))}
                     </TableCell>
                     <TableCell>
-                      <CellEditIcon>
+                      <CellCreateAt>
+                        {moment(project.createdAt).fromNow()}
+                      </CellCreateAt>
+                    </TableCell>
+                    <TableCell>
+                      <CellEditIcon onClick={() => handleOpenEdit(project._id)}>
                         <DesignServicesIcon className="icon" />
                       </CellEditIcon>
                     </TableCell>
                     <TableCell>
-                      <CellEditIcon>
-                        <CellDeleteIcon>
-                          <ClearIcon className="icon" />
-                        </CellDeleteIcon>
-                      </CellEditIcon>
+                      <CellDeleteIcon
+                        onClick={() => handleDeleteProject(project._id)}
+                      >
+                        <ClearIcon className="icon" />
+                      </CellDeleteIcon>
                     </TableCell>
                   </TableRow>
                 ))
             )}
           </TableBody>
         </Table>
+        <FormEditProjects isOpen={openEdit} onClose={handleCloseEdit} />
       </TableContainer>
 
       <TablePagination

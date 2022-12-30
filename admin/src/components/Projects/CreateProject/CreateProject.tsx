@@ -113,7 +113,7 @@ const CreateProject = () => {
   // SUBMIT
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    const payload: ProjectTypes = { ...data, technologicals, links };
+    const payload: any = { ...data, technologicals, links };
     if (data.image) {
       dispatch(createProject(payload));
       setData({

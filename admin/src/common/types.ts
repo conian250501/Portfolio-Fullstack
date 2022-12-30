@@ -36,20 +36,30 @@ export interface LinkTypes {
 }
 
 export interface ProjectTypes {
-  _id?: string | number;
+  _id: string | number;
   image: string;
   name: string;
   description: string;
   type: any;
   links: LinkTypes[];
   technologicals: string[];
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface TypeOfProject {
   _id: string | number;
   name: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PayloadUpdateProject {
+  id: string | number;
+  data: {
+    image: string;
+    name: string;
+    description: string;
+    type: any;
+  };
 }

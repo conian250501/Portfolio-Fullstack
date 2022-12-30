@@ -128,6 +128,11 @@ const TableTypes = (props: Props) => {
               allTypeOfProject.length >= 0 &&
               allTypeOfProject
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .sort(
+                  (a, b) =>
+                    new Date(b.createdAt).valueOf() -
+                    new Date(a.createdAt).valueOf()
+                )
                 .map((row: TypeOfProject) => (
                   <TableRow key={row._id}>
                     <TableCell>
