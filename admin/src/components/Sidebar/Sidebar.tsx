@@ -22,10 +22,10 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import { Menu, Typography } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "~/app/hooks";
-import { logoutAsync } from "~/featureds/Auth/authActions";
-import { closeSidebar, getOpenSidebar } from "~/featureds/Header/sidebarSlice";
+import { logoutAsync } from "~/featureds/auth/authActions";
+import { closeSidebar, getOpenSidebar } from "~/featureds/header/sidebarSlice";
 import SidebarItem from "./SidebarItem";
-import { getUser } from "~/featureds/Auth/authSlice";
+import { getUser } from "~/featureds/auth/authSlice";
 
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch();

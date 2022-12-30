@@ -47,6 +47,7 @@ const CreateType = (props: Props) => {
           isOpen={openForm}
           onClose={handleCloseForm}
           isUpdate={false}
+          id={""}
         />
       </Box>
       <TableTypes />

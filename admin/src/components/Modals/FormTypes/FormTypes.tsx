@@ -7,16 +7,45 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "~/app/hooks";
+import { ProjectTypes, TypeOfProject } from "~/common/types";
+
+import {
+  createTypeProject,
+  updateTypeProject,
+} from "~/featureds/typeProject/typeProjectActions";
+import { getType } from "~/featureds/typeProject/typeProjectSlice";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
   isUpdate: boolean;
+  id: string | number;
 };
 
-const FormTypes = ({ isOpen, onClose, isUpdate }: Props) => {
-  const [name, setName] = useState("");
+const FormTypes = ({ isOpen, onClose, isUpdate, id }: Props) => {
+  const { register, handleSubmit, setValue } = useForm<TypeOfProject>();
+  const dispatch = useAppDispatch();
+  const typeDetail = useAppSelector(getType);
+
+  useEffect(() => {
+    if (isUpdate) {
+      typeDetail && setValue("name", typeDetail.name);
+    }
+  }, [typeDetail, isUpdate]);
+
+  const handleCreateType: SubmitHandler<TypeOfProject> = (data) => {
+    dispatch(createTypeProject(data));
+    setValue("name", "");
+  };
+
+  const handleUpdate: SubmitHandler<TypeOfProject> = async (data) => {
+    const newData = { ...data, _id: id };
+    await dispatch(updateTypeProject(newData));
+    onClose();
+  };
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -32,6 +61,11 @@ const FormTypes = ({ isOpen, onClose, isUpdate }: Props) => {
       <Fade in={isOpen}>
         <Box
           component="form"
+          onSubmit={
+            isUpdate
+              ? handleSubmit(handleUpdate)
+              : handleSubmit(handleCreateType)
+          }
           sx={{
             position: "absolute",
             top: "50%",
@@ -54,11 +88,11 @@ const FormTypes = ({ isOpen, onClose, isUpdate }: Props) => {
           </Typography>
 
           <TextField
-            value={name}
             placeholder="enter new type project..."
             label="Project's type"
             fullWidth
-            onChange={(e) => setName(e.target.value)}
+            required
+            {...register("name", { required: true })}
           />
           <Button
             type="submit"
@@ -72,7 +106,7 @@ const FormTypes = ({ isOpen, onClose, isUpdate }: Props) => {
               ":hover": { background: "rgb(58, 43, 186)" },
             }}
           >
-            Add
+            {isUpdate ? "update" : "Add"}
           </Button>
         </Box>
       </Fade>

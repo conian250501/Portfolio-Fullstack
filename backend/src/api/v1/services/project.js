@@ -5,7 +5,11 @@ import Users from "../models/user";
 
 export const projectService = {
   getAll: async () => {
-    const projects = await Project.find({});
+    const projects = await Project.find().populate({
+      path: "type",
+      model: TypeProject,
+    });
+
     if (projects) return projects;
   },
   getProject: async (projectId) => {

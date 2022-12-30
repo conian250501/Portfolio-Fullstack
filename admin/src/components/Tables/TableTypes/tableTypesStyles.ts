@@ -20,3 +20,17 @@ export const CellEditIcon = styled("div")(({ theme }) => ({
     cursor: "pointer",
   },
 }));
+export const CellDeleteIcon = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "30px",
+  height: "20px",
+  borderRadius: 2,
+  background: theme.palette.primary.main,
+  ".icon": {
+    fontSize: "18px",
+    cursor: "pointer",
+    color: "#fff",
+  },
+}));

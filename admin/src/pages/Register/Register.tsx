@@ -14,7 +14,7 @@ import { TextError, useStyles } from "./registerStyles";
 import { Link } from "react-router-dom";
 import { RegisterTypes } from "../../common/types";
 import { useAppDispatch } from "../../app/hooks";
-import { registerAsync } from "../../featureds/Auth/authActions";
+import { registerAsync } from "../../featureds/auth/authActions";
 import { toast, ToastContainer } from "react-toastify";
 import { FieldValues, useForm } from "react-hook-form";
 

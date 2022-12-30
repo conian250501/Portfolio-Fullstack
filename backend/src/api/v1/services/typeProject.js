@@ -2,6 +2,14 @@ import TypeProject from "../models/typesProject";
 import Project from "../models/project";
 
 export const typeProjectService = {
+  getAll: async () => {
+    const types = await TypeProject.find({});
+    return types;
+  },
+  findById: async (id) => {
+    const type = await TypeProject.findById(id);
+    return type;
+  },
   findByName: async (name) => {
     const typeProject = await TypeProject.findOne({ name });
     if (typeProject) return typeProject;

@@ -2,7 +2,7 @@ import { Box, Popover, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "~/app/hooks";
-import { getUser } from "~/featureds/Auth/authSlice";
+import { getUser } from "~/featureds/auth/authSlice";
 import {
   ButtonLogout,
   EmailUser,

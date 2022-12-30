@@ -1,6 +1,22 @@
 import { Button, styled, TextField } from "@mui/material";
 
-export const Container = styled("div")(({ theme }) => ({}));
+export const Container = styled("div")(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  backgroundColor: "#fff",
+  padding: 16,
+  height: "calc(100vh - 300px)",
+  overflowY: "scroll",
+  borderRadius: 6,
+  "::-webkit-scrollbar": {
+    display: "none",
+  },
+  MsOverflowStyle: "none",
+  scrollbarWidth: "none",
+}));
+
 export const Form = styled("form")(({ theme }) => ({
   marginTop: 16,
 }));
@@ -24,6 +40,7 @@ export const LabelImage = styled("label")(({ theme }) => ({
 }));
 
 export const ImgResult = styled("div")(({ theme }) => ({
+  marginBottom: 16,
   img: {
     width: "100%",
     height: "100%",
