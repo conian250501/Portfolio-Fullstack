@@ -7,9 +7,16 @@ import { Container, Heading } from "./profileStyles";
 import PostForm from "~/components/Profile/Post/PostCreate";
 import PostList from "~/components/Profile/Post/PostList";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useAppDispatch } from "~/app/hooks";
+import { getProfile } from "~/featureds/profile/profileActions";
 type Props = {};
 
 const Profile = (props: Props) => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getProfile());
+  }, []);
   return (
     <Container>
       <Heading variant="h4">Profile</Heading>

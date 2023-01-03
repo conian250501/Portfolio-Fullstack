@@ -20,6 +20,7 @@ export const schemas = {
     password: Joi.string().required(),
   }),
   updateUser: Joi.object({
+    email: Joi.string().required(),
     avatar: Joi.string().required(),
     userName: Joi.string(),
     nickName: Joi.string(),

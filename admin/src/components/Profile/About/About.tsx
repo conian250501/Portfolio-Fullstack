@@ -11,18 +11,17 @@ import { Typography } from "@mui/material";
 import AttachEmailIcon from "@mui/icons-material/AttachEmail";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import SchoolIcon from "@mui/icons-material/School";
+import { useAppSelector } from "~/app/hooks";
+import { selectProfile } from "~/featureds/profile/profileSlice";
 
 type Props = {};
 
 const About = (props: Props) => {
+  const profileData = useAppSelector(selectProfile);
   return (
     <Container>
       <Heading>About</Heading>
-      <Inroduced>
-        As a creative, logical thinker and skilled in graphic software and
-        programming languages, I will solve your problems. Take a look at work
-        below and feel free to contact me with any questions!
-      </Inroduced>
+      <Inroduced>{profileData?.introduce}</Inroduced>
       <ContentList>
         <ContentItem>
           <LocationOnIcon className="icon" />
