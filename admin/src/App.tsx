@@ -18,6 +18,7 @@ import ProjectPage from "./pages/Projects/ProjectPage";
 import CreatePage from "./pages/Projects/ProjectPage";
 import Register from "./pages/Register";
 import Skills from "./pages/Skills";
+import UpdateProfile from "./pages/UpdateProfile";
 
 function App() {
   const isAuthenticated = useAppSelector(getIsAuthenticated);
@@ -70,6 +71,7 @@ function App() {
             />
           </Route>
 
+          {/* ===== PROFILE ===== */}
           <Route
             path="/profile"
             element={
@@ -82,6 +84,19 @@ function App() {
               )
             }
           />
+          <Route
+            path="/update-profile"
+            element={
+              isAuthenticated ? (
+                <MainLayout>
+                  <UpdateProfile />
+                </MainLayout>
+              ) : (
+                <Login />
+              )
+            }
+          />
+          {/* ===== PROJECT ===== */}
           <Route
             path="/project"
             element={
@@ -98,6 +113,8 @@ function App() {
             <Route path="create-type" element={<CreateType />} />
             <Route path="all" element={<ProjectList />} />
           </Route>
+
+          {/* ==== SKILLS ==== */}
           <Route
             path="/skills"
             element={
@@ -110,6 +127,8 @@ function App() {
               )
             }
           />
+
+          {/* ==== CONTACT ===== */}
           <Route
             path="/contacts"
             element={

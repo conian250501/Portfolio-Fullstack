@@ -29,6 +29,36 @@ export interface UserTypes {
   message: string;
 }
 
+// PROFILE
+export interface ProfileUserTypes {
+  _id: string | number;
+  email: string;
+  userName: string;
+  nickName: string;
+  avatar: string;
+  phone: string;
+  title: string;
+  description: string;
+  introduce: string;
+  isAdmin: boolean;
+  projects: ProjectTypes[];
+  // skills: SkillTypes[]
+  // contacts: ContactTypes[]
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProfileUpdateTypes {
+  userName: string;
+  nickName: string;
+  avatar: string;
+  phone: string;
+  title: string;
+  description: string;
+  introduce: string;
+  isAdmin: boolean;
+}
+
 // PROJECT TYPES
 export interface LinkTypes {
   label: string;

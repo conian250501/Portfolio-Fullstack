@@ -1,3 +1,4 @@
+import profileReducer from "~/featureds/profile/profileSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import projectReducer from "~/featureds/project/projectSlice";
 import typeProjectReducer from "~/featureds/typeProject/typeProjectSlice";
@@ -6,6 +7,7 @@ import sidebarReducer from "../featureds/header/sidebarSlice";
 
 export const rootReducer = combineReducers({
   auth: authReducer,
+  profile: profileReducer,
   sidebar: sidebarReducer,
   project: projectReducer,
   typeProject: typeProjectReducer,
